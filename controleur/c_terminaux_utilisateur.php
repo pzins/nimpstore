@@ -22,7 +22,7 @@ if(isset($_POST["login"]) && isset($_POST["mdp"]) && isset($_POST["nom"]) && iss
 else if(isset($_POST["login"]) && isset($_POST["password"]))
 {
     include(dirname(__FILE__) . '/../modele/m_connexion.php');
-    $ident = identification($_POST["login"], $_POST["password"], $conn);
+    $ident = identification($_POST["login"], $_POST["password"], $conn, 'Client');
     if (!empty($ident)) {
         /*$res = getNom($_POST['login'], $conn);
         echo "Bienvenue : " . $res[n] . " " . $res[p];*/

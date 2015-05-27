@@ -4,6 +4,7 @@ INSERT INTO Client VALUES ('bbb', 'bbbbbb', 'alexandre.lacaz@gmail.com', 'Lacaz'
 INSERT INTO Client VALUES ('ccc','cccccc', 'luc.zen@gmail.com', 'Zen', 'Luc');
 INSERT INTO Client VALUES ('ddd', 'dddddd', 'marc.rede@gmail.com', 'Rede', 'Marc');
 
+INSERT INTO comptesadministrateurs VALUES ('admin','123456');
 
 INSERT INTO Constructeur_OS VALUES ('microsoft');
 INSERT INTO Constructeur_OS VALUES ('apple');
@@ -44,13 +45,12 @@ INSERT INTO Terminal VALUES (1006, 'ddd', 6);
 
 
 
-/*pas bon
 
 INSERT INTO Editeur VALUES ('EA', 'M. George', 'www.ea.com');
 INSERT INTO Editeur VALUES ('Ubisoft', 'M. Paul', 'www.ubisoft.com');
 INSERT INTO Editeur VALUES ('Gameloft', 'Mme Baye', 'www.gameloft.com');
 INSERT INTO Editeur VALUES ('Konami', 'M. Chris', 'www.konami.com');
-
+/*
 
 
 INSERT INTO Contenu VALUES (0, 'Ball game', 'jeux avec de balles', 0, 'Gameloft');

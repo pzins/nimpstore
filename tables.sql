@@ -1,6 +1,5 @@
-CREATE SEQUENCE seq_contenu;
-CREATE SEQUENCE seq_modele;
-CREATE SEQUENCE seq_os;
+
+
 
 
 
@@ -12,11 +11,14 @@ CREATE SEQUENCE seq_os;
 --
 -- Structure de la table carte
 --
+CREATE SEQUENCE seq_contenu;
+CREATE SEQUENCE seq_modele;
+CREATE SEQUENCE seq_os;
 
 CREATE TABLE Carte (
   num INT PRIMARY KEY,
-  montantDepart money DEFAULT NULL,
-  montantCourant money DEFAULT NULL,
+  montantDepart DECIMAL(3,2) DEFAULT NULL,
+  montantCourant DECIMAL(3,2) DEFAULT NULL,
   dateValidite date DEFAULT NULL
 );
 
@@ -93,13 +95,13 @@ CREATE TABLE Contenu (
   id SERIAL PRIMARY KEY,
   titre VARCHAR(100) NOT NULL,
   description TEXT NOT NULL,
-  coutFixe MONEY NOT NULL,
+  coutFixe DECIMAL(3,2) NOT NULL,
   editeur VARCHAR(50) REFERENCES Editeur(nom) NOT NULL
 );
 
 CREATE TABLE Application (
   idApp SERIAL PRIMARY KEY REFERENCES Contenu(id),
-  coutPeriodique MONEY NOT NULL
+  coutPeriodique DECIMAL(3,2) NOT NULL
 );
 
 CREATE TABLE Ressource (
@@ -108,16 +110,16 @@ CREATE TABLE Ressource (
 );
 ---contrainte : PROJ(Application, id) IN UNION(PROJ(Application, idApp), PROJ(Ressource, idRessource))
 
-CREATE VIEW vRessource AS
-  SELECT * FROM Contenu C, Application A
+CREATE VIEW vApplication AS
+  SELECT C.id, C.titre, C.description, C.coutFixe, C.editeur, A.coutPeriodique
+  FROM Contenu C, Application A
   WHERE C.id=A.idApp;
 
-CREATE VIEW vApplication AS
-  SELECT * FROM Contenu C, Ressource R
-  WHERE C.id=R.idApp;
-
--- --------------------------------------------------------
-
+CREATE VIEW vRessource AS
+  SELECT C.id, C.titre, C.description, C.coutFixe, C.editeur, R.idApp
+  FROM Contenu C, Ressource R
+  WHERE C.id=R.idRessource;
+-- --------------------------------------------------------;
 --
 -- Structure de la table transaction
 --
@@ -125,13 +127,13 @@ CREATE VIEW vApplication AS
 CREATE TABLE Transaction (
   num SERIAL PRIMARY KEY,
   dateAchat DATE NOT NULL,
-  montantTotal MONEY NOT NULL,
+  montantTotal DECIMAL(3,2) NOT NULL,
   acheteur VARCHAR(20) NOT NULL REFERENCES Client(login),
   destinateur VARCHAR(20) NOT NULL REFERENCES Client(login),
   numCarte INT NOT NULL REFERENCES Carte(num)
 );
 
---- type money dejà >=0 je pense
+--- type DECIMAL(3,2) dejà >=0 je pense
 --- --------------------------------------------------------
 --
 -- Structure de la table contenuconcerne

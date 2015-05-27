@@ -7,7 +7,7 @@ require('header.php');
 ?>
 <div id="main">
     <div id="content">
-        <div id="tooplate_wrapper">
+        <div>
         <?php
         //à mettre la connection ici comme ça on pourra l'enlever partout après
         include "modele/connect.php";

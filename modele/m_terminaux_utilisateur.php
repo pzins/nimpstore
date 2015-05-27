@@ -6,8 +6,7 @@
  */
 function getNom($login, $conn)
 {
-    $sql = "SELECT C.prenom AS p, C.nom AS n, C.id AS id FROM client C, comptesutilisateurs U
-                WHERE U.id = C.id AND U.login = '$login';";
+    $sql = "SELECT prenom AS p, nom AS n FROM client WHERE login = '$login';";
     $query = pg_query($conn, $sql);
     $res  =pg_fetch_array($query);
     return $res;
@@ -18,10 +17,10 @@ function getNom($login, $conn)
  */
 function getTerminal($login, $conn)
 {
-    $sql = "SELECT T.numSerie num, M.designation desig, C.nom cons, S.version v, O.nom os
-from terminal T, modele M, constructeur_dev C, systemeexploitation S, constructeur_os O, comptesutilisateurs U
-WHERE U.login='$login' AND U.id=T.numclient AND T.idmodele=M.id AND C.id=S.id AND M.idsystemeexploitation=S.id AND
-O.id=S.idconstructeur;";
+    $sql = "SELECT T.numSerie num, M.designation desig, M.constructeur cons, S.version v, S.constructeur os
+from terminal T, modele M, os S
+WHERE T.client='$login' AND T.idmodele=M.id AND M.idos = S.id";
+
     $query = pg_query($conn, $sql);
     while($res = pg_fetch_array($query))
     {
@@ -51,24 +50,23 @@ function getModele($conn)
 
 /*
  * retourne l'id du client à partir de son login
- */
+ *//*
 function getIdClient($conn, $login)
 {
     $sql = "select id as id from comptesutilisateurs where login='$login'";
     $query = pg_query($conn, $sql);
     $res = pg_fetch_array($query);
     return $res[id];
-}
+}*/
 
 /*
  * ajoute un terminal à un client
  */
 function ajouter_terminal($conn, $numserie, $modele, $login)
 {
-    $id = getIdClient($conn, $login);
     if(is_numeric($numserie))
     {
-        $sql = "INSERT INTO terminal(numserie, numclient, idmodele) VALUES ('$numserie', '$id', '$modele')";
+        $sql = "INSERT INTO terminal(numserie, client, idmodele) VALUES ('$numserie', '$login', '$modele')";
         return pg_query($conn, $sql);
     }
     return false;
@@ -79,8 +77,8 @@ function ajouter_terminal($conn, $numserie, $modele, $login)
  */
 function getNumserie($conn, $login)
 {
-    $sql = "SELECT T.numSerie num  from terminal T, comptesutilisateurs U
-    WHERE U.login='$login' AND U.id=T.numclient";
+    $sql = "SELECT numSerie num  from terminal T
+    WHERE T.client='$login'";
     $query = pg_query($conn, $sql);
     echo "<select name='terminal' size=1>";
     while($res = pg_fetch_array($query)) {
@@ -92,9 +90,8 @@ function getNumserie($conn, $login)
 /*
  * supprime un terminal d'un client
  */
-function supprimer_terminal($conn, $numserie, $login)
+function supprimer_terminal($conn, $numserie)
 {
-    $id = getIdClient($conn, $login);
     $sql = "DELETE FROM Terminal WHERE numserie='$numserie'";
     return pg_query($conn, $sql);
 }

@@ -50,7 +50,7 @@ else if(isset($_POST["terminal"]))
     include_once(dirname(__FILE__) . '/../modele/m_terminaux_utilisateur.php');
     session_start();
     $login = $_SESSION['login'];
-    $res = supprimer_terminal($conn, $_POST["terminal"], $login);
+    $res = supprimer_terminal($conn, $_POST["terminal"]);
     include_once(dirname(__FILE__) . '/../vue/v_terminaux_utilisateur.php');
 }
 ?>

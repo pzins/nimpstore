@@ -1,6 +1,14 @@
+CREATE SEQUENCE seq_contenu;
+CREATE SEQUENCE seq_modele;
+CREATE SEQUENCE seq_os;
+
+
+
+
+
+
 
 -- --------------------------------------------------------
-
 --
 -- Structure de la table carte
 --
@@ -10,9 +18,7 @@ CREATE TABLE Carte (
   montantDepart money DEFAULT NULL,
   montantCourant money DEFAULT NULL,
   dateValidite date DEFAULT NULL
-) ;
-
-
+);
 
 --- pour carte bancaire pourquoi juste num?
 --- montant courant et depart aussi ?
@@ -28,24 +34,18 @@ CREATE VIEW vCartePrepayee AS SELECT * FROM carte WHERE dateValidite != NULL;
 --
 
 CREATE TABLE Client (
-  id SERIAL PRIMARY KEY,
+  login VARCHAR (20) PRIMARY KEY,
+  mdp VARCHAR(20) CHECK(LENGTH(mdp) > 5),
   email VARCHAR(50) NOT NULL UNIQUE,
   nom VARCHAR(30) NOT NULL,
   prenom VARCHAR(30) NOT NULL,
   CHECK (email LIKE '%@%')
-);
--- --------------------------------------------------------
-CREATE TABLE comptesUtilisateurs (
-  id SERIAL PRIMARY KEY REFERENCES Client(id),
-  login VARCHAR(20) UNIQUE,
-  mdp VARCHAR(20) CHECK (LENGTH(mdp) > 5)
 );
 
 CREATE TABLE comptesAdministrateurs (
   login VARCHAR (20) UNIQUE ,
   mdp VARCHAR (20) CHECK (LENGTH (mdp) > 5)
 );
-
 
 CREATE TABLE comptesAnalystes (
   login VARCHAR (20) UNIQUE ,
@@ -60,8 +60,7 @@ CREATE TABLE comptesAnalystes (
 --
 
 CREATE TABLE Constructeur_dev (
-  id SERIAL PRIMARY KEY,
-  nom VARCHAR(50) NOT NULL
+  nom VARCHAR(50)PRIMARY KEY
 );
 
 -- --------------------------------------------------------
@@ -71,8 +70,7 @@ CREATE TABLE Constructeur_dev (
 --
 
 CREATE TABLE Constructeur_os (
-  id SERIAL PRIMARY KEY,
-  nom VARCHAR(50) NOT NULL
+  nom VARCHAR(50) PRIMARY KEY
 );
 
 -- --------------------------------------------------------
@@ -81,8 +79,7 @@ CREATE TABLE Constructeur_os (
 --
 
 CREATE TABLE Editeur (
-  id SERIAL PRIMARY KEY,
-  nom VARCHAR(50) NOT NULL,
+  nom VARCHAR(50) PRIMARY KEY,
   contact VARCHAR(50) NOT NULL,
   url VARCHAR(100) NOT NULL,
   CHECK (url LIKE 'www.%.%')
@@ -97,19 +94,8 @@ CREATE TABLE Contenu (
   titre VARCHAR(100) NOT NULL,
   description TEXT NOT NULL,
   coutFixe MONEY NOT NULL,
-  idEditeur INT REFERENCES Editeur(id) NOT NULL
+  editeur VARCHAR(50) REFERENCES Editeur(nom) NOT NULL
 );
-
-
-
-CREATE VIEW vRessource AS
-  SELECT * FROM Contenu C, Application A
-  WHERE C.id=A.idApp;
-
-CREATE VIEW vApplication AS
-  SELECT * FROM Contenu C, Ressource R
-  WHERE C.id=R.idApp;
-
 
 CREATE TABLE Application (
   idApp SERIAL PRIMARY KEY REFERENCES Contenu(id),
@@ -122,6 +108,14 @@ CREATE TABLE Ressource (
 );
 ---contrainte : PROJ(Application, id) IN UNION(PROJ(Application, idApp), PROJ(Ressource, idRessource))
 
+CREATE VIEW vRessource AS
+  SELECT * FROM Contenu C, Application A
+  WHERE C.id=A.idApp;
+
+CREATE VIEW vApplication AS
+  SELECT * FROM Contenu C, Ressource R
+  WHERE C.id=R.idApp;
+
 -- --------------------------------------------------------
 
 --
@@ -132,8 +126,8 @@ CREATE TABLE Transaction (
   num SERIAL PRIMARY KEY,
   dateAchat DATE NOT NULL,
   montantTotal MONEY NOT NULL,
-  acheteur INT NOT NULL REFERENCES Client(id),
-  destinateur INT NOT NULL REFERENCES Client(id),
+  acheteur VARCHAR(20) NOT NULL REFERENCES Client(login),
+  destinateur VARCHAR(20) NOT NULL REFERENCES Client(login),
   numCarte INT NOT NULL REFERENCES Carte(num)
 );
 
@@ -155,13 +149,13 @@ CREATE TABLE DureeAcces (
 -- --------------------------------------------------------
 
 --
--- Structure de la table systemeexploitation
+-- Structure de la table Os
 --
 
-CREATE TABLE SystemeExploitation (
+CREATE TABLE Os (
   id SERIAL PRIMARY KEY ,
   version VARCHAR(50) NOT NULL,
-  idConstructeur INT NOT NULL REFERENCES Constructeur_os(id)
+  constructeur VARCHAR(50) NOT NULL REFERENCES Constructeur_os(nom)
 ) ;
 -- --------------------------------------------------------
 
@@ -171,8 +165,8 @@ CREATE TABLE SystemeExploitation (
 
 CREATE TABLE ContenuDisponibleSur (
   idContenu INT NOT NULL REFERENCES Contenu(id),
-  idSystemeExploitation INT NOT NULL REFERENCES SystemeExploitation(id),
-  PRIMARY KEY (idContenu,idSystemeExploitation)
+  idOs INT NOT NULL REFERENCES Os(id),
+  PRIMARY KEY (idContenu,idOs)
 ) ;
 
 -- --------------------------------------------------------
@@ -185,21 +179,18 @@ CREATE TABLE ContenuDisponibleSur (
 CREATE TABLE Modele (
   id SERIAL PRIMARY KEY,
   designation VARCHAR(50) NOT NULL UNIQUE ,
-  idconstructeur INT NOT NULL REFERENCES Constructeur_dev(id),
-  idSystemeExploitation INT NOT NULL REFERENCES SystemeExploitation(id)
+  constructeur VARCHAR(50) NOT NULL REFERENCES Constructeur_dev(nom),
+  idOs INT NOT NULL REFERENCES Os(id)
 );
 
-
-
 -- --------------------------------------------------------
-
 --
 -- Structure de la table terminal
 --
 
 CREATE TABLE Terminal (
   numSerie INT PRIMARY KEY,
-  numClient INT NOT NULL REFERENCES Client(id),
+  client VARCHAR(20) NOT NULL REFERENCES Client(login),
   idModele INT NOT NULL REFERENCES Modele(id)
 );
 
@@ -221,11 +212,11 @@ CREATE TABLE Installation (
 
 
 CREATE TABLE Avis (
-  idClient INT REFERENCES Client(id),
+  client VARCHAR(20) REFERENCES Client(login),
   idApplication INTEGER REFERENCES Application(idApp),
   note INTEGER,
   commentaire TEXT,
-  PRIMARY KEY (idClient, idApplication),
+  PRIMARY KEY (client, idApplication),
   CHECK (LENGTH(commentaire) <= 500),
   CHECK (note <= 5)
 );

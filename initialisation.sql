@@ -1,51 +1,46 @@
 
-INSERT INTO Client VALUES (0, 'albert.martin@gmail.com', 'Martin', 'Albert');
-INSERT INTO Client VALUES (1, 'alexandre.lacaz@gmail.com', 'Lacaz', 'Alexandre');
-INSERT INTO Client VALUES (2, 'luc.zen@gmail.com', 'Zen', 'Luc');
-INSERT INTO Client VALUES (3, 'marc.rede@gmail.com', 'Rede', 'Marc');
-
-INSERT INTO comptesutilisateurs VALUES (0, 'aaa', 'aaaaaa');
-INSERT INTO comptesutilisateurs VALUES (1, 'bbb', 'bbbbbb');
-INSERT INTO comptesutilisateurs VALUES (2, 'ccc', 'cccccc');
-INSERT INTO comptesutilisateurs VALUES (3, 'ddd', 'dddddd');
+INSERT INTO Client VALUES ('aaa', 'aaaaaa', 'albert.martin@gmail.com', 'Martin', 'Albert');
+INSERT INTO Client VALUES ('bbb', 'bbbbbb', 'alexandre.lacaz@gmail.com', 'Lacaz', 'Alexandre');
+INSERT INTO Client VALUES ('ccc','cccccc', 'luc.zen@gmail.com', 'Zen', 'Luc');
+INSERT INTO Client VALUES ('ddd', 'dddddd', 'marc.rede@gmail.com', 'Rede', 'Marc');
 
 
+INSERT INTO Constructeur_OS VALUES ('microsoft');
+INSERT INTO Constructeur_OS VALUES ('apple');
+INSERT INTO Constructeur_OS VALUES ('ubuntu');
+INSERT INTO Constructeur_OS VALUES ('google');
 
-INSERT INTO Constructeur_OS VALUES (0, 'Microsoft');
-INSERT INTO Constructeur_OS VALUES (1, 'Apple');
-INSERT INTO Constructeur_OS VALUES (2, 'Ubuntu');
-INSERT INTO Constructeur_OS VALUES (3, 'Google');
-
-INSERT INTO systemeexploitation VALUES (0, '8', 0);
-INSERT INTO systemeexploitation VALUES (1, '7', 0);
-INSERT INTO systemeexploitation VALUES (2, '10', 1);
-INSERT INTO systemeexploitation VALUES (3, '14', 2);
-INSERT INTO systemeexploitation VALUES (4, '5', 3);
-
-
-INSERT INTO Constructeur_dev VALUES (0, 'Asus');
-INSERT INTO Constructeur_dev VALUES (1, 'HP');
-INSERT INTO Constructeur_dev VALUES (2, 'Dell');
-INSERT INTO Constructeur_dev VALUES (3, 'Apple');
+INSERT INTO os VALUES (nextval('seq_os'), '8', 'microsoft');
+INSERT INTO os VALUES (nextval('seq_os'), '7', 'microsoft');
+INSERT INTO os VALUES (nextval('seq_os'), '10', 'apple');
+INSERT INTO os VALUES (nextval('seq_os'), '14', 'ubuntu');
+INSERT INTO os VALUES (nextval('seq_os'), '5', 'google');
 
 
+INSERT INTO Constructeur_dev VALUES ('asus');
+INSERT INTO Constructeur_dev VALUES ('hp');
+INSERT INTO Constructeur_dev VALUES ('dell');
+INSERT INTO Constructeur_dev VALUES ('apple');
 
-INSERT INTO Modele VALUES (0, 'K55V', 0 ,0);
-INSERT INTO Modele VALUES (1, 'K88X', 0, 1);
-INSERT INTO Modele VALUES (2, 'L53E', 0, 0);
-INSERT INTO Modele VALUES (3, 'PRO', 3, 2);
-INSERT INTO Modele VALUES (4, 'XPS', 2, 0);
-INSERT INTO Modele VALUES (5, 'Inspiron3', 2, 4);
-INSERT INTO Modele VALUES (6, 'Pavillon', 1, 3);
-INSERT INTO Modele VALUES (7, 'r04v', 1, 1);
 
-INSERT INTO Terminal VALUES (1000, 0, 0);
-INSERT INTO Terminal VALUES (1001, 0, 3);
-INSERT INTO Terminal VALUES (1002, 1, 0);
-INSERT INTO Terminal VALUES (1003, 1, 1);
-INSERT INTO Terminal VALUES (1004, 2, 4);
-INSERT INTO Terminal VALUES (1005, 3, 6);
-INSERT INTO Terminal VALUES (1006, 3, 7);
+INSERT INTO Modele VALUES (nextval('seq_modele'), 'K55V', 'asus' ,1);
+INSERT INTO Modele VALUES (nextval('seq_modele'), 'K88X', 'asus' ,2);
+INSERT INTO Modele VALUES (nextval('seq_modele'), 'L53E', 'dell' ,2);
+INSERT INTO Modele VALUES (nextval('seq_modele'), 'PRO', 'apple' ,3);
+INSERT INTO Modele VALUES (nextval('seq_modele'), 'XPS', 'dell' ,1);
+INSERT INTO Modele VALUES (nextval('seq_modele'), 'Inspiron3', 'hp' ,1);
+INSERT INTO Modele VALUES (nextval('seq_modele'), 'Pavillon', 'hp' ,5);
+INSERT INTO Modele VALUES (nextval('seq_modele'), 'r04v', 'asus' ,4);
+
+
+
+INSERT INTO Terminal VALUES (1000, 'aaa', 1);
+INSERT INTO Terminal VALUES (1001, 'aaa', 7);
+INSERT INTO Terminal VALUES (1002, 'bbb', 2);
+INSERT INTO Terminal VALUES (1003, 'bbb', 3);
+INSERT INTO Terminal VALUES (1004, 'ccc', 4);
+INSERT INTO Terminal VALUES (1005, 'ddd', 5);
+INSERT INTO Terminal VALUES (1006, 'ddd', 6);
 
 
 

@@ -7,7 +7,7 @@ if(isset($_POST["titre"]) && isset($_POST["description"]) && isset($_POST["coutf
     && isset($_POST["editeur"]))
 {
     //ajout d'une ressource
-    if(!empty($_POST["applibase"]))
+    if($_POST["type"] == 'r')
     {
         ajouterRessource($conn, $_POST["titre"], $_POST["description"],
             $_POST["coutfixe"],$_POST["editeur"], $_POST["applibase"]);

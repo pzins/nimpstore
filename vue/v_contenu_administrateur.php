@@ -11,11 +11,11 @@
     <?php
     getApplication($conn);
     ?>
-    </table>
+</table>
     <br/><br/>
 
 <h1>Ressources</h1>
-<table border="1">
+<table border="1" >
     <tr>
         <td width="100pt"><b>Titre</b></td>
         <td width="100pt"><b>Description</b></td>
@@ -30,4 +30,3 @@
 
 <br/><br/>
     <a href="index.php?action=ajouter_contenu">Ajouter un contenu</a>
-    <a href="index.php?action=supprimer_contenu">Supprimer un contenu</a>

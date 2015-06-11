@@ -7,11 +7,11 @@ function getApplication($conn)
     $query = pg_query($conn, $sql);
     while($res = pg_fetch_array($query))
     {
-        echo "<td>$res[t]</td>";
+        echo "<tr><td>$res[t]</td>";
         echo "<td>$res[d]</td>";
         echo "<td>$res[c]</td>";
         echo "<td>$res[e]</td>";
-        echo "<td>$res[p]</td>";
+        echo "<td>$res[p]</td></tr>";
     }
 }
 
@@ -23,11 +23,13 @@ function getRessource($conn)
     $query = pg_query($conn, $sql);
     while($res = pg_fetch_array($query))
     {
+        echo "<tr>";
         echo "<td>$res[t]</td>";
         echo "<td>$res[d]</td>";
         echo "<td>$res[c]</td>";
         echo "<td>$res[e]</td>";
         echo "<td>$res[tt]</td>";
+        echo "</tr>";
     }
 }
 
@@ -45,34 +47,46 @@ function getEditeur($conn)
 
 function ajouterApplication($conn, $titre, $desc, $coutfixe, $editeur, $coutperio)
 {
-    $sql = "SELECT nextval('seq_contenu');";
-    $id = pg_num_rows(pg_query($conn, $sql));
+    $sql = "SELECT nextval('seq_contenu') id;";
+    $id = pg_fetch_array(pg_query($conn, $sql));
     $sql = "INSERT INTO contenu(id, titre, description, coutfixe, editeur)
-   VALUES ($id, '$titre', '$desc', $coutfixe, '$editeur')";
+   VALUES ($id[id], '$titre', '$desc', $coutfixe, '$editeur')";
     $query = pg_query($conn, $sql);
-    $sql = "INSERT INTO application(idapp, coutperiodique) VALUES ($id, $coutperio)";
+    $sql = "INSERT INTO application(idapp, coutperiodique) VALUES ($id[id], $coutperio)";
     pg_query($conn, $sql);
 }
 
 function ajouterRessource($conn,  $titre, $desc, $coutfixe, $editeur, $applibase)
 {
-    $idApp = getIdAppli($conn, $applibase);
-    $sql = "SELECT nextval('seq_contenu');";
-    $id = pg_num_rows(pg_query($conn, $sql));
+    $sql = "SELECT nextval('seq_contenu') id;";
+    $id = pg_fetch_array(pg_query($conn, $sql));
     $sql = "INSERT INTO contenu(id, titre, description, coutfixe, editeur)
-   VALUES ($id, '$titre', '$desc', $coutfixe, '$editeur'";
+   VALUES ($id[id], '$titre', '$desc', $coutfixe, '$editeur');";
     pg_query($conn, $sql);
     $sql = "INSERT INTO ressource(idressource, idapp)
-    VALUES ($id, $idApp)";
+    VALUES ($id[id], $applibase)";
     pg_query($conn, $sql);
 }
 
+function getApplications($conn)
+{
+
+    $sql = "SELECT c.titre n, a.idapp i FROM application a, contenu c
+            WHERE a.idapp=c.id";
+    $query = pg_query($conn, $sql);
+    while($res = pg_fetch_array($query))
+    {
+        echo "<option value='$res[i]'> $res[n]</option>";
+    }
+}
+
+/*
 function getIdAppli($conn, $titre)
 {
     $sql = "SELECT id i FROM contenu WHERE titre='$titre'";
     return pg_fetch_array(pg_query($conn, $sql))[i];
 }
-
+*/
 function getContenu($conn)
 {
     $sql = "SELECT id i, titre t from contenu";
@@ -82,14 +96,4 @@ function getContenu($conn)
     {
         echo "<option value='$res[i]'>$res[t]</option>";
     }
-}
-
-function supprimerContenu($conn, $id)
-{
-    $sql1 = "delete from Application A where a.idapp = $id";
-    $sql2 = "delete from ressource R where r.idressource = $id or r.idapp = $id";
-    $sql3 = "delete from Contenu C WHERE C.id = $id";
-    pg_query($conn, $sql1);
-    pg_query($conn, $sql2);
-    pg_query($conn, $sql3);
 }

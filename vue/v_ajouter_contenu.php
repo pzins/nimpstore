@@ -20,7 +20,10 @@
         </tr>
         <tr id="ab" style="visibility: hidden">
             <td>Application de base:</td>
-            <td><input type="text" name="applibase"/></td>
+            <td><select name="applibase" >
+                    <?php getApplications($conn);?>
+                </select>
+            </td>
         </tr>
 
         <tr><td><input type="submit"/></td></tr>

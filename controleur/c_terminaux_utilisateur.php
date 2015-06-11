@@ -24,15 +24,13 @@ else if(isset($_POST["login"]) && isset($_POST["password"]))
     include(dirname(__FILE__) . '/../modele/m_connexion.php');
     $ident = identification($_POST["login"], $_POST["password"], $conn, 'Client');
     if (!empty($ident)) {
-        /*$res = getNom($_POST['login'], $conn);
-        echo "Bienvenue : " . $res[n] . " " . $res[p];*/
         session_start();
         $_SESSION['login'] = $_POST['login'];
         $_SESSION['pwd'] = $_POST['password'];
         include_once(dirname(__FILE__).'/../modele/m_terminaux_utilisateur.php');
         include_once(dirname(__FILE__) . '/../vue/v_terminaux_utilisateur.php');
     } else {
-        echo "L'identification a echouee";
+        echo "<h2>L'identification a echouee</h2>";
     }
 }
 //cas ou un client s'ajoute un terminal
@@ -53,4 +51,9 @@ else if(isset($_POST["terminal"]))
     $res = supprimer_terminal($conn, $_POST["terminal"]);
     include_once(dirname(__FILE__) . '/../vue/v_terminaux_utilisateur.php');
 }
+
+
+
+
+
 ?>

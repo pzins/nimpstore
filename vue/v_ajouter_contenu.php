@@ -1,31 +1,44 @@
 <form action="index.php?action=contenu_administrateur" method="POST">
-    <select name="type" id="type" onchange="hide()">
-        <option value="a">Application</option>
-        <option value="r">Ressource</option>
-    </select><br/>
-    Titre: <input type="text" name="titre"/><br/>
-    Description: <input type="text" name="description"/><br/>
-    Cout fixe: <input type="text" name="coutfixe"/><br/>
+    <table >
+        <tr>
+            <td>
+                <select name="type" id="type" onchange="hide()">
+                    <option value="a">Application</option>
+                    <option value="r">Ressource</option>
+                </select>
+            </td>
+        </tr>
+        <tr><td>Titre:          </td><td><input type="text" name="titre"/>          </td></tr>
+        <tr><td>Description:    </td><td><input type="text" name="description"/>    </td></tr>
+        <tr><td>Cout fixe:      </td><td><input type="text" name="coutfixe"/>       </td></tr>
         <?php
-        getEditeur($conn);
-    ?>
-    <p id="cp">Cout periodique:<input type="text" name="coutperiodique"/></p>
-    <p id="ab" style="display: none">
-        Application de base: <input type="text" name="applibase"/></p>
+            getEditeur($conn);
+        ?>
+        <tr id="cp">
+            <td> Cout periodique:</td>
+            <td><input type="text" name="coutperiodique"/></td>
+        </tr>
+        <tr id="ab" style="visibility: hidden">
+            <td>Application de base:</td>
+            <td><input type="text" name="applibase"/></td>
+        </tr>
 
-    <input type="submit"/>
+        <tr><td><input type="submit"/></td></tr>
+    </table>
+
 </form>
 <script type="text/javascript">
     function hide(){
-        if(document.getElementById('cp').style.display == 'none')
+        if(document.getElementById('cp').style.visibility == 'hidden')
         {
-            document.getElementById('cp').style.display = 'block';
-            document.getElementById('ab').style.display = 'none';
+            document.getElementById('cp').style.visibility = 'visible';
+            document.getElementById('ab').style.visibility = 'hidden';
         }
         else
         {
-            document.getElementById('ab').style.display = 'block';
-            document.getElementById('cp').style.display = 'none';
+            console.log('ol');
+            document.getElementById('ab').style.visibility = 'visible';
+            document.getElementById('cp').style.visibility = 'hidden';
         }
     }
 </script>

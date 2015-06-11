@@ -9,7 +9,6 @@
         <td width="100pt"><b>Systeme d'exploitation</b></td>
     </tr>
     <?php
-    session_start ();
     $login = $_SESSION['login'];
     getTerminal($login, $conn);
     ?>

@@ -35,12 +35,12 @@ function getEditeur($conn)
 {
     $sql = "SELECT nom n FROM editeur";
     $query = pg_query($conn, $sql);
-    echo "Editeur: <select name='editeur'>";
+    echo "<tr><td>Editeur: </td><td><select name='editeur'>";
     while($res = pg_fetch_array($query))
     {
         echo "<option>$res[n]</option>";
     }
-    echo "</select></br>";
+    echo "</select></td></tr>";
 }
 
 function ajouterApplication($conn, $titre, $desc, $coutfixe, $editeur, $coutperio)
@@ -50,8 +50,7 @@ function ajouterApplication($conn, $titre, $desc, $coutfixe, $editeur, $coutperi
     $sql = "INSERT INTO contenu(id, titre, description, coutfixe, editeur)
    VALUES ($id, '$titre', '$desc', $coutfixe, '$editeur')";
     $query = pg_query($conn, $sql);
-    $sql = "INSERT INTO application(idapp, coutperiodique)
-    VALUES ($id, $coutperio)";
+    $sql = "INSERT INTO application(idapp, coutperiodique) VALUES ($id, $coutperio)";
     pg_query($conn, $sql);
 }
 

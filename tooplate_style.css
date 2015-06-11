@@ -16,6 +16,11 @@ body {
 	background-position: top;	
 }
 
+.error
+{
+    color: red;
+}
+
 a, a:link, a:visited { 
 	color: #f9b507; 
 	font-weight: normal; 

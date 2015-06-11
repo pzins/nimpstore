@@ -22,6 +22,7 @@ from terminal T, modele M, os S
 WHERE T.client='$login' AND T.idmodele=M.id AND M.idos = S.id";
 
     $query = pg_query($conn, $sql);
+
     while($res = pg_fetch_array($query))
     {
         echo "<tr>";
@@ -64,10 +65,21 @@ function getIdClient($conn, $login)
  */
 function ajouter_terminal($conn, $numserie, $modele, $login)
 {
-    if(is_numeric($numserie))
+
+
+    if(!is_numeric($numserie))
+    {
+        echo "<h5 class='error'>Numéro de serie invalide</h5>";
+    }
+    else
     {
         $sql = "INSERT INTO terminal(numserie, client, idmodele) VALUES ('$numserie', '$login', '$modele')";
-        return pg_query($conn, $sql);
+        $ret = pg_query($conn, $sql);
+        if($ret == false)
+        {
+            echo "<h5 class='error'>Le Numéro de serie existe deja</h5>";
+        }
+        return $ret;
     }
     return false;
 }

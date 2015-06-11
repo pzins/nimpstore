@@ -3,28 +3,30 @@
 include_once(dirname(__FILE__).'/../modele/m_contenu_administrateur.php');
 
 //si on ajoute un contenu
-if(isset($_POST["titre"]) && isset($_POST["description"]) && isset($_POST["coutfixe"])
-    && isset($_POST["editeur"]))
+if(isset($_POST["type"]))
 {
-    //ajout d'une ressource
-    if($_POST["type"] == 'r')
+    if(isset($_POST["titre"]) && isset($_POST["description"]) && isset($_POST["coutfixe"])
+        && isset($_POST["editeur"]))
     {
-        ajouterRessource($conn, $_POST["titre"], $_POST["description"],
-            $_POST["coutfixe"],$_POST["editeur"], $_POST["applibase"]);
-    }
-    //ajout d'une application
-    else if(!empty($_POST["coutperiodique"]) || $_POST["coutperiodique"] == 0)
-    {
-        ajouterApplication($conn, $_POST["titre"], $_POST["description"],
-            $_POST["coutfixe"],$_POST["editeur"], $_POST["coutperiodique"]);
-    }
-    include_once(dirname(__FILE__).'/../vue/v_contenu_administrateur.php');
+        //ajout d'une ressource
+        if ($_POST["type"] == 'r') {
+            $id = ajouterRessource($conn, $_POST["titre"], $_POST["description"],
+                $_POST["coutfixe"], $_POST["editeur"], $_POST["applibase"]);
+            ajouterContenuDispo($conn, $id, $_POST["os"]);
+        } //ajout d'une application
+        else if (!empty($_POST["coutperiodique"]) || $_POST["coutperiodique"] == 0) {
+            $id = ajouterApplication($conn, $_POST["titre"], $_POST["description"],
+                $_POST["coutfixe"], $_POST["editeur"], $_POST["coutperiodique"]);
+            ajouterContenuDispo($conn, $id, $_POST["os"]);
 
-}
-else if (isset($_POST["contenu"]))
-{
-    include_once(dirname(__FILE__) . '/../modele/m_connexion.php');
-    supprimerContenu($conn, $_POST["contenu"]);
+        }
+        include_once(dirname(__FILE__) . '/../vue/v_contenu_administrateur.php');
+    }
+} else if (isset($_POST["contact"]) && isset($_POST["nom"]) && isset($_POST["url"])){
+    if(!ajouterEditeur($conn, $_POST["nom"], $_POST["contact"], $_POST["url"])){
+        echo "<h2>Erreur dans l'ajout : nom deja existant ou URL non valide</h2>";
+        include_once(dirname(__FILE__).'/../vue/v_contenu_administrateur.php');
+    }
 }
 else
 {
@@ -42,6 +44,5 @@ else
         echo "<h2>L'identification a echouee</h2>";
     }
 }
-
 ?>
 

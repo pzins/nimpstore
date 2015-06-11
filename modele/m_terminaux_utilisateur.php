@@ -108,5 +108,27 @@ function supprimer_terminal($conn, $numserie)
     return pg_query($conn, $sql);
 }
 
+function getAppliDispo($login, $conn)
+{
+    $sql = "select t.numserie num, va.titre ti, va.description des, va.editeur ed,
+    va.coutfixe cf, va.coutperiodique cp, o.constructeur cons, o.version ver
+    from terminal t, modele m, os o, vapplication va, contenudisponiblesur c
+    WHERE t.idmodele=m.id and m.idos=o.id and c.idos=o.id and c.idcontenu=va.id and
+    t.client='$login'";
+    $query = pg_query($conn, $sql);
+    while($res = pg_fetch_array($query))
+    {
+        echo "<tr>";
+        echo "<td>$res[num]</td>";
+        echo "<td>$res[ti]</td>";
+        echo "<td>$res[des]</td>";
+        echo "<td>$res[ed]</td>";
+        echo "<td>$res[cf]</td>";
+        echo "<td>$res[cp]</td>";
+        echo "<td>$res[cons] $res[ver]</td>";
+        echo "</tr>";
+    }
+}
+
 
 ?>

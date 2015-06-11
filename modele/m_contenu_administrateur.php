@@ -45,6 +45,20 @@ function getEditeur($conn)
     echo "</select></td></tr>";
 }
 
+function getOs($conn)
+{
+    $sql = "SELECT id i, version v, constructeur c
+            FROM os";
+    $query = pg_query($conn, $sql);
+    echo "<tr><td>Os: </td><td><select name='os'>";
+    while($res = pg_fetch_array($query))
+    {
+        echo "<option value='$res[i]'>$res[c] $res[v]</option>";
+    }
+    echo "</select></td></tr>";
+}
+
+
 function ajouterApplication($conn, $titre, $desc, $coutfixe, $editeur, $coutperio)
 {
     $sql = "SELECT nextval('seq_contenu') id;";
@@ -54,6 +68,7 @@ function ajouterApplication($conn, $titre, $desc, $coutfixe, $editeur, $coutperi
     $query = pg_query($conn, $sql);
     $sql = "INSERT INTO application(idapp, coutperiodique) VALUES ($id[id], $coutperio)";
     pg_query($conn, $sql);
+    return $id[id];
 }
 
 function ajouterRessource($conn,  $titre, $desc, $coutfixe, $editeur, $applibase)
@@ -66,6 +81,13 @@ function ajouterRessource($conn,  $titre, $desc, $coutfixe, $editeur, $applibase
     $sql = "INSERT INTO ressource(idressource, idapp)
     VALUES ($id[id], $applibase)";
     pg_query($conn, $sql);
+    return $id[id];
+}
+
+function ajouterContenuDispo($conn, $contenu, $os)
+{
+    $sql = "insert into contenudisponiblesur values ($contenu, $os);";
+    $query = pg_query($conn, $sql);
 }
 
 function getApplications($conn)
@@ -87,6 +109,7 @@ function getIdAppli($conn, $titre)
     return pg_fetch_array(pg_query($conn, $sql))[i];
 }
 */
+/*
 function getContenu($conn)
 {
     $sql = "SELECT id i, titre t from contenu";
@@ -96,4 +119,12 @@ function getContenu($conn)
     {
         echo "<option value='$res[i]'>$res[t]</option>";
     }
+}
+*/
+
+function ajouterEditeur($conn, $nom, $contact, $url)
+{
+    $sql = "INSERT INTO editeur VALUES ('$nom', '$contact', '$url')";
+    $query = pg_query($conn, $sql);
+    return $query;
 }

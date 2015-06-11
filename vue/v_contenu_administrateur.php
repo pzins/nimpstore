@@ -29,4 +29,8 @@
 </table>
 
 <br/><br/>
-    <a href="index.php?action=ajouter_contenu">Ajouter un contenu</a>
+    <a id="mid_title" href="index.php?action=ajouter_contenu">Ajouter un contenu</a>
+    <br/><br/>
+    <a id="mid_title" href="index.php?action=ajouter_editeur">Ajouter un editeur</a>
+
+<a class="more" href="index.php" style="margin: 50px;">Retour</a>

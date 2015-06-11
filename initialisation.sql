@@ -5,6 +5,8 @@ INSERT INTO Client VALUES ('ccc','cccccc', 'luc.zen@gmail.com', 'Zen', 'Luc');
 INSERT INTO Client VALUES ('ddd', 'dddddd', 'marc.rede@gmail.com', 'Rede', 'Marc');
 
 INSERT INTO comptesadministrateurs VALUES ('admin','123456');
+INSERT INTO comptesanalystes VALUES ('stat','789789');
+
 
 INSERT INTO Constructeur_OS VALUES ('microsoft');
 INSERT INTO Constructeur_OS VALUES ('apple');

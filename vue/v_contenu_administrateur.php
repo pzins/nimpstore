@@ -29,5 +29,5 @@
 </table>
 
 <br/><br/>
-    <a href="index.php?action=ajouter_contenu">Ajouter une ressource</a>
-    <a href="index.php?action=supprimer_contenu">Supprimer une ressource</a>
+    <a href="index.php?action=ajouter_contenu">Ajouter un contenu</a>
+    <a href="index.php?action=supprimer_contenu">Supprimer un contenu</a>

@@ -16,6 +16,10 @@ if(isset($_POST["titre"]) && isset($_POST["description"]) && isset($_POST["coutf
     }
     include_once(dirname(__FILE__).'/../vue/v_contenu_administrateur.php');
 
+}else if (isset($_POST["contenu"]))
+{
+    include_once(dirname(__FILE__) . '/../modele/m_connexion.php');
+    supprimerContenu($conn, $_POST["contenu"]);
 }
 else
 {

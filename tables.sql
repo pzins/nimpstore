@@ -17,8 +17,8 @@ CREATE SEQUENCE seq_os;
 
 CREATE TABLE Carte (
   num INT PRIMARY KEY,
-  montantDepart DECIMAL(3,2) DEFAULT NULL,
-  montantCourant DECIMAL(3,2) DEFAULT NULL,
+  montantDepart DECIMAL(5,2) DEFAULT NULL,
+  montantCourant DECIMAL(5,2) DEFAULT NULL,
   dateValidite date DEFAULT NULL
 );
 
@@ -95,13 +95,13 @@ CREATE TABLE Contenu (
   id SERIAL PRIMARY KEY,
   titre VARCHAR(100) NOT NULL,
   description TEXT NOT NULL,
-  coutFixe DECIMAL(3,2) NOT NULL,
+  coutFixe DECIMAL(5,2) NOT NULL,
   editeur VARCHAR(50) REFERENCES Editeur(nom) NOT NULL
 );
 
 CREATE TABLE Application (
   idApp SERIAL PRIMARY KEY REFERENCES Contenu(id),
-  coutPeriodique DECIMAL(3,2) NOT NULL
+  coutPeriodique DECIMAL(5,2) NOT NULL
 );
 
 CREATE TABLE Ressource (
@@ -127,13 +127,13 @@ CREATE VIEW vRessource AS
 CREATE TABLE Transaction (
   num SERIAL PRIMARY KEY,
   dateAchat DATE NOT NULL,
-  montantTotal DECIMAL(3,2) NOT NULL,
+  montantTotal DECIMAL(5,2) NOT NULL,
   acheteur VARCHAR(20) NOT NULL REFERENCES Client(login),
   destinateur VARCHAR(20) NOT NULL REFERENCES Client(login),
   numCarte INT NOT NULL REFERENCES Carte(num)
 );
 
---- type DECIMAL(3,2) dejà >=0 je pense
+--- type DECIMAL(5,2) dejà >=0 je pense
 --- --------------------------------------------------------
 --
 -- Structure de la table contenuconcerne

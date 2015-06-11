@@ -73,3 +73,24 @@ function getIdAppli($conn, $titre)
     $sql = "SELECT id i FROM contenu WHERE titre='$titre'";
     return pg_fetch_array(pg_query($conn, $sql))[i];
 }
+
+function getContenu($conn)
+{
+    $sql = "SELECT id i, titre t from contenu";
+    $query = pg_query($conn, $sql);
+    echo "Contenu: <select name='contenu'>";
+    while($res = pg_fetch_array($query))
+    {
+        echo "<option value='$res[i]'>$res[t]</option>";
+    }
+}
+
+function supprimerContenu($conn, $id)
+{
+    $sql1 = "delete from Application A where a.idapp = $id";
+    $sql2 = "delete from ressource R where r.idressource = $id or r.idapp = $id";
+    $sql3 = "delete from Contenu C WHERE C.id = $id";
+    pg_query($conn, $sql1);
+    pg_query($conn, $sql2);
+    pg_query($conn, $sql3);
+}

@@ -15,11 +15,7 @@
                 <li><a href="index.php?action=connexion_analyste">Analyste</a></li>
             </ul>
         </div>
-	    <div id="tooplate_header">
-        	<div id="site_title">
-                <h1><a href="#">Nimpstore</a></h1>
-            </div>
-        </div>
+
         <div id="tooplate_middle">
         	<div id="mid_title">
             	Welcome to Nimpstore!

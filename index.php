@@ -6,8 +6,7 @@
 require('header.php');
 ?>
 <div id="main">
-    <div id="content">
-        <div>
+    <div id="content" align="center">
         <?php
         //à mettre la connection ici comme ça on pourra l'enlever partout après
         include "modele/connect.php";
@@ -24,7 +23,6 @@ require('header.php');
         pg_close($conn);
 
         ?>
-        </div>
     </div>
     <?php require('menu.php'); ?>
 </div>

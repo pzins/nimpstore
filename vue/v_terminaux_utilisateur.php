@@ -13,7 +13,7 @@
     $login = $_SESSION['login'];
     getTerminal($login, $conn);
     ?>
-
+</table>
     <br/><br/>
     <a href="index.php?action=ajouter_terminal">Ajouter un terminal</a>
     <a href="index.php?action=supprimer_terminal">Supprimer un terminal</a>

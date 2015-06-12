@@ -19,3 +19,5 @@
     <a id="mid_title" href="index.php?action=supprimer_terminal">Supprimer un terminal</a>
 <br/><br/>
 <a id="mid_title" href="index.php?action=appli_dispo">Applications Disponibles</a>
+<br/><br/>
+<a id="mid_title" href="index.php?action=achat_utilisateur">Acheter</a>

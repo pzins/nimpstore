@@ -130,5 +130,63 @@ function getAppliDispo($login, $conn)
     }
 }
 
+function getAppliDispoForm($login, $conn)
+{
+    $sql = "select va.id id, va.titre ti, va.description des
+    from terminal t, modele m, os o, vapplication va, contenudisponiblesur c
+    WHERE t.idmodele=m.id and m.idos=o.id and c.idos=o.id and c.idcontenu=va.id and
+    t.client='$login'";
+    $query = pg_query($conn, $sql);
+    while($res = pg_fetch_array($query))
+    {
+        echo "<option value='$res[id]'>$res[ti] : $res[des]</option>";
+    }
+}
+
+function getRessourceForm($conn)
+{
+    $sql = "select id id, titre t from vressource;";
+    $query = pg_query($conn, $sql);
+    while($res = pg_fetch_array($query))
+    {
+        echo "<option value='$res[id]'> $res[t] </option>";
+    }
+}
+
+function getClientForm($conn)
+{
+    $sql = "select login l, nom n, prenom p from client";
+    $query = pg_query($conn, $sql);
+    while($res = pg_fetch_array($query))
+    {
+        echo "<option value='$res[l]'> $res[l] : $res[n], $res[p]</option>";
+    }
+}
+
+function achatContenu($conn, $type, $login, $client, $idApp, $idRes)
+{
+    $sql = "SELECT nextval('seq_transaction') id;";
+    $id = pg_fetch_array(pg_query($conn, $sql));
+
+    $sql = "select num n from carte where client='$login'";
+    $carte = pg_fetch_array(pg_query($conn, $sql));
+    if($type == 'a'){
+        $sql = "select coutfixe p from contenu where id=$idApp;";
+        $prix = pg_fetch_array(pg_query($conn, $sql));
+
+        $sql = "insert into transaction values ($id[id], now(), $prix[p], '$login',
+                      '$client', $carte[n]);";
+    pg_query($conn, $sql);
+    } else if($type == 'r')
+    {
+        $sql = "select coutfixe p from contenu where id=$idRes;";
+        $prix = pg_fetch_array(pg_query($conn, $sql));
+
+        $sql = "insert into transaction values ($id[id], now(), $prix[p], '$login',
+                      '$client', $carte[n]);";
+        pg_query($conn, $sql);
+    }
+}
+
 
 ?>

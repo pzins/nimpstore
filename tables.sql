@@ -14,12 +14,15 @@
 CREATE SEQUENCE seq_contenu;
 CREATE SEQUENCE seq_modele;
 CREATE SEQUENCE seq_os;
+create SEQUENCE seq_transaction;
+
 
 CREATE TABLE Carte (
   num INT PRIMARY KEY,
   montantDepart DECIMAL(5,2) DEFAULT NULL,
   montantCourant DECIMAL(5,2) DEFAULT NULL,
-  dateValidite date DEFAULT NULL
+  dateValidite date DEFAULT NULL,
+  client VARCHAR(20) REFERENCES Client(login)
 );
 
 --- pour carte bancaire pourquoi juste num?

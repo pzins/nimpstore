@@ -29,7 +29,7 @@
             </td>
         </tr>
 
-        <tr><td><input onclick="test()" type="submit"/></td></tr>
+        <tr><td><input type="submit"/></td></tr>
     </table>
 
 </form>
@@ -42,7 +42,6 @@
         }
         else
         {
-            console.log('ol');
             document.getElementById('ab').style.visibility = 'visible';
             document.getElementById('cp').style.visibility = 'hidden';
         }

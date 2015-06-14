@@ -1,5 +1,6 @@
 <?php
 
+//liste de toutes les applications
 function getApplication($conn)
 {
     $sql = "SELECT titre t, description d, coutfixe c, editeur e,
@@ -15,6 +16,7 @@ function getApplication($conn)
     }
 }
 
+//affiche les lignes de ttes les ressources
 function getRessource($conn)
 {
     $sql = "SELECT v.titre t, v.description d, v.coutfixe c, v.editeur e, c.titre tt
@@ -33,6 +35,8 @@ function getRessource($conn)
     }
 }
 
+//affiche les options du select pour le choix de l'éditeur
+//lors de l'ajout d'un contenu
 function getEditeur($conn)
 {
     $sql = "SELECT nom n FROM editeur";
@@ -45,6 +49,8 @@ function getEditeur($conn)
     echo "</select></td></tr>";
 }
 
+//affiche les options du select pour le choix de l'os
+//lors de l'ajout d'un contenu
 function getOs($conn)
 {
     $sql = "SELECT id i, version v, constructeur c
@@ -58,7 +64,7 @@ function getOs($conn)
     echo "</select></td></tr>";
 }
 
-
+//réalise l'ajout d'une nouvelle application
 function ajouterApplication($conn, $titre, $desc, $coutfixe, $editeur, $coutperio)
 {
     $sql = "SELECT nextval('seq_contenu') id;";
@@ -71,6 +77,7 @@ function ajouterApplication($conn, $titre, $desc, $coutfixe, $editeur, $coutperi
     return $id[id];
 }
 
+//réalise l'ajout d'un nouvelle ressource
 function ajouterRessource($conn,  $titre, $desc, $coutfixe, $editeur, $applibase)
 {
     $sql = "SELECT nextval('seq_contenu') id;";
@@ -84,12 +91,15 @@ function ajouterRessource($conn,  $titre, $desc, $coutfixe, $editeur, $applibase
     return $id[id];
 }
 
+//met à jour la table des contenu dispo
 function ajouterContenuDispo($conn, $contenu, $os)
 {
     $sql = "insert into contenudisponiblesur values ($contenu, $os);";
     $query = pg_query($conn, $sql);
 }
 
+//affiche les options pour le select du choix de l'applicaiton
+//lors de lajout d'une ressource
 function getApplications($conn)
 {
 
@@ -102,26 +112,8 @@ function getApplications($conn)
     }
 }
 
-/*
-function getIdAppli($conn, $titre)
-{
-    $sql = "SELECT id i FROM contenu WHERE titre='$titre'";
-    return pg_fetch_array(pg_query($conn, $sql))[i];
-}
-*/
-/*
-function getContenu($conn)
-{
-    $sql = "SELECT id i, titre t from contenu";
-    $query = pg_query($conn, $sql);
-    echo "Contenu: <select name='contenu'>";
-    while($res = pg_fetch_array($query))
-    {
-        echo "<option value='$res[i]'>$res[t]</option>";
-    }
-}
-*/
 
+//realise l'ajout d'un nouvel editeur
 function ajouterEditeur($conn, $nom, $contact, $url)
 {
     $sql = "INSERT INTO editeur VALUES ('$nom', '$contact', '$url')";

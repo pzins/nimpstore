@@ -3,6 +3,13 @@ Template 2040 Blue Arc
 http://www.tooplate.com/view/2040-blue-arc
 */
 
+table {
+    color: #46b8fb;
+    font-size: large;
+}
+
+
+
 body {
 	margin: 0;
 	padding: 0;

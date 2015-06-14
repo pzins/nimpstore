@@ -21,6 +21,8 @@
 <a id="mid_title" href="index.php?action=appli_dispo">Applications Disponibles</a>
 <br/><br/>
 <a id="mid_title" href="index.php?action=achat_utilisateur">Acheter</a>
+<br/><br/>
+<a id="mid_title" href="index.php?action=avis_utilisateur">Laisser un avis</a>
 
 <br/><br/><br/>
 
@@ -54,3 +56,6 @@
     getHistoInstallation($conn, $login);
     ?>
 </table>
+
+
+

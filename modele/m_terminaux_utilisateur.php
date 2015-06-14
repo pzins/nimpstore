@@ -112,6 +112,9 @@ function supprimer_terminal($conn, $numserie)
     return pg_query($conn, $sql);
 }
 
+
+
+//affiche lignes des applications dispo pour un client (par rapp à ses terminaux)
 function getAppliDispo($login, $conn)
 {
     $sql = "select t.numserie num, va.titre ti, va.description des, va.editeur ed,
@@ -134,6 +137,8 @@ function getAppliDispo($login, $conn)
     }
 }
 
+//affiche les options du select avec les applications disponibles pour un client
+//pour l'achat d'appli
 function getAppliDispoForm($login, $conn)
 {
     $sql = "select distinct va.id id, va.titre ti, va.description des, va.coutfixe cf, va.coutperiodique cp
@@ -148,6 +153,8 @@ function getAppliDispoForm($login, $conn)
     }
 }
 
+//affiches les options du select avec les ressources possibles
+//pour l'achat de ressources
 function getRessourceForm($conn)
 {
     $sql = "select id id, titre t from vressource;";
@@ -158,6 +165,7 @@ function getRessourceForm($conn)
     }
 }
 
+//affiche les option du select pour les clients destinataires de l'achat
 function getClientForm($conn)
 {
     $sql = "select login l, nom n, prenom p from client";
@@ -168,14 +176,7 @@ function getClientForm($conn)
     }
 }
 
-/**
- * @param $conn
- * @param $type
- * @param $login
- * @param $client
- * @param $idApp
- * @param $idRes
- */
+//réalise les ajouts ds les tables lors d'un achat
 function achatContenu($conn, $type, $login, $client, $idApp, $idRes)
 {
     $sql = "SELECT nextval('seq_transaction') id;";
@@ -219,6 +220,8 @@ function achatContenu($conn, $type, $login, $client, $idApp, $idRes)
     }
 }
 
+
+//insere dans la table installer lors d'un achat
 function installer($conn, $type, $login, $idapp, $idres)
 {
     if($type == 'a')
@@ -239,7 +242,7 @@ function installer($conn, $type, $login, $idapp, $idres)
     }
 }
 
-
+//affiche les lignes correspondant aux achat du client
 function getAchat($conn, $login)
 {
     $sql = "select t.dateachat d, t.montanttotal m, t.destinateur d, numcarte n,
@@ -262,6 +265,7 @@ function getAchat($conn, $login)
     }
 }
 
+//affiche les lignes correspondant aux installations du client
 function getHistoInstallation($conn, $login)
 {
     $sql = "select c.titre titre, t.numserie num
@@ -276,6 +280,29 @@ function getHistoInstallation($conn, $login)
         echo "<td>$res[num]</td>";
         echo "</tr>";
     }
+}
+
+//affiche les options du select contenant les appli du client
+////pour l'ajout d'un avis
+function getApplicationClientForm($conn, $login)
+{
+    $sql = "select a.titre t, a.description d, a.id i
+            from vapplication a, dureeacces d, TRANSACTION t
+            WHERE a.id=d.idcontenu and d.numtransaction=t.num
+              and t.destinateur='$login';";
+    $query = pg_query($conn, $sql);
+    while($res = pg_fetch_array($query))
+    {
+        echo "<option value='$res[i]'>$res[t] : $res[d]</option>";
+    }
+}
+
+//realise l'ajout d'un avis
+function addAvis($conn, $login, $idapp, $note, $com)
+{
+    $sql = "insert into avis VALUES ('$login',$idapp, $note, '$com');";
+    pg_query($conn, $sql);
+
 }
 
 

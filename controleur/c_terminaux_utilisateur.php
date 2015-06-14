@@ -57,8 +57,15 @@ else if(isset($_POST["terminal"]))
     $login = $_SESSION['login'];
     achatContenu($conn, $_POST["typeAchat"],$login,
         $_POST["achatClient"], $_POST["achatApp"], $_POST["achatRes"]);
-    installer($conn, $_POST["typeAchat"], $login, $_POST["achatApp"], $_POST["achatRes"]);
+    installer($conn, $_POST["typeAchat"], $_POST["achatClient"], $_POST["achatApp"], $_POST["achatRes"]);
     include_once(dirname(__FILE__) . '/../vue/v_terminaux_utilisateur.php');
+}else if(isset($_POST["app"]))
+{
+    include_once(dirname(__FILE__) . '/../modele/m_terminaux_utilisateur.php');
+    session_start();
+    $login = $_SESSION['login'];
+    addAvis($conn, $login, $_POST["app"], $_POST["note"], $_POST["com"]);
+
 }
 
 

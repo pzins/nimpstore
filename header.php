@@ -11,8 +11,8 @@
         <div id="tooplate_menu">
             <ul>
                 <li><a href="index.php?action=connexion_utilisateur" class="current">Utilisateur</a></li>
-                <li><a href="index.php?action=connexion_administrateur">Administrateur</a></li>
-                <li><a href="index.php?action=connexion_analyste">Analyste</a></li>
+                <li><a href="index.php?action=connexion_administrateur" class="current">Administrateur</a></li>
+                <li><a href="index.php?action=connexion_analyste" class="current">Analyste</a></li>
             </ul>
         </div>
 

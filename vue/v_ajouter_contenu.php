@@ -11,7 +11,7 @@
         </tr>
         <tr><td>Titre:      </td><td><input type="text" name="titre"/></td></tr>
         <tr><td>Description:</td><td><input type="text" name="description"/></td></tr>
-        <tr><td>Cout fixe:  </td><td><input type="text" name="coutfixe"/></td></tr>
+        <tr><td>Cout fixe:  </td><td><input id='achat' type="text" name="coutfixe" onchange="fachat()"/></td></tr>
         <?php
             getEditeur($conn);
             getOs($conn);
@@ -19,7 +19,7 @@
 
         <tr id="cp">
             <td> Cout periodique:</td>
-            <td><input type="text" name="coutperiodique"/></td>
+            <td><input id="abo" type="text" name="coutperiodique" onchange="fabo()"/></td>
         </tr>
         <tr id="ab" style="visibility: hidden">
             <td>Application de base:</td>
@@ -34,7 +34,22 @@
 
 </form>
 <script type="text/javascript">
-    function hide(){
+    function fachat(){
+        var tmp = document.forms["myForm"].coutfixe.value;
+        if(tmp != "" && tmp != "0")
+        {
+            document.forms["myForm"].coutperiodique.value = '0';
+        }
+    }
+    function fabo(){
+        var tmp = document.forms["myForm"].coutperiodique.value;
+        if(tmp != "" && tmp != "0")
+        {
+            document.forms["myForm"].coutfixe.value = '0';
+        }
+    }
+
+    function hide(){valueOf
         if(document.getElementById('cp').style.visibility == 'hidden')
         {
             document.getElementById('cp').style.visibility = 'visible';

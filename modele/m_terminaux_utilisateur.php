@@ -65,9 +65,13 @@ function getIdClient($conn, $login)
  */
 function ajouter_terminal($conn, $numserie, $modele, $login)
 {
-
-
-    if(!is_numeric($numserie))
+    $sql = "select count(*) from terminal t WHERE t.client=$login";
+    $nb = pg_query($conn, $sql);
+    if(nb > 5)
+    {
+        echo "<h5 class='error'>Impossible d'avoir plus de 5 terminaux</h5>";
+    }
+    else if(!is_numeric($numserie))
     {
         echo "<h5 class='error'>Numéro de serie invalide</h5>";
     }
@@ -132,14 +136,15 @@ function getAppliDispo($login, $conn)
 
 function getAppliDispoForm($login, $conn)
 {
-    $sql = "select va.id id, va.titre ti, va.description des
+    $sql = "select distinct va.id id, va.titre ti, va.description des, va.coutfixe cf, va.coutperiodique cp
     from terminal t, modele m, os o, vapplication va, contenudisponiblesur c
     WHERE t.idmodele=m.id and m.idos=o.id and c.idos=o.id and c.idcontenu=va.id and
     t.client='$login'";
     $query = pg_query($conn, $sql);
     while($res = pg_fetch_array($query))
     {
-        echo "<option value='$res[id]'>$res[ti] : $res[des]</option>";
+        echo "<option value='$res[id]'>$res[ti] : $res[des] :
+            cout fixe : $res[cf], cout periodique : $res[cp]</option>";
     }
 }
 
@@ -163,6 +168,14 @@ function getClientForm($conn)
     }
 }
 
+/**
+ * @param $conn
+ * @param $type
+ * @param $login
+ * @param $client
+ * @param $idApp
+ * @param $idRes
+ */
 function achatContenu($conn, $type, $login, $client, $idApp, $idRes)
 {
     $sql = "SELECT nextval('seq_transaction') id;";
@@ -172,19 +185,70 @@ function achatContenu($conn, $type, $login, $client, $idApp, $idRes)
     $carte = pg_fetch_array(pg_query($conn, $sql));
     if($type == 'a'){
         $sql = "select coutfixe p from contenu where id=$idApp;";
-        $prix = pg_fetch_array(pg_query($conn, $sql));
+        $prixfixe = pg_fetch_array(pg_query($conn, $sql))[p];
 
-        $sql = "insert into transaction values ($id[id], now(), $prix[p], '$login',
+        $sql = "select coutperiodique p from application where idapp=$idApp;";
+        $prixperio = pg_fetch_array(pg_query($conn, $sql))[p];
+        $prix = $prixperio + $prixfixe;
+        $sql = "insert into transaction values ($id[id], now(), $prix, '$login',
                       '$client', $carte[n]);";
-    pg_query($conn, $sql);
+        pg_query($conn, $sql);
+        if($prixperio == '0')
+        {
+            $duree = -1;
+        }
+        else
+        {
+            $duree = 1;
+        }
+
+        $sql = "insert into dureeacces values ($idApp, $id[id], $duree, false )";
+        pg_query($conn, $sql);
+
+
+
     } else if($type == 'r')
     {
         $sql = "select coutfixe p from contenu where id=$idRes;";
-        $prix = pg_fetch_array(pg_query($conn, $sql));
+        $prix = pg_fetch_array(pg_query($conn, $sql))[p];
 
-        $sql = "insert into transaction values ($id[id], now(), $prix[p], '$login',
+        $sql = "insert into transaction values ($id[id], now(), $prix, '$login',
                       '$client', $carte[n]);";
         pg_query($conn, $sql);
+        $sql = "insert into dureeacces values ($idApp, $id[id], -1, false )";
+        pg_query($conn, $sql);
+    }
+}
+
+function getAchat($conn, $login)
+{
+    $sql = "select t.dateachat d, t.montanttotal m, t.destinateur d, numcarte n
+            from transaction t WHERE t.acheteur='$login';";
+    $query = pg_query($conn, $sql);
+    while($res = pg_fetch_array($query))
+    {
+        echo "<tr>";
+        echo "<td>$res[d]</td>";
+        echo "<td>$res[m]</td>";
+        echo "<td>$res[d]</td>";
+        echo "<td>$res[n]</td>";
+        echo "</tr>";
+    }
+}
+
+function getHistoInstallation($conn, $login)
+{
+    $sql = "select c.titre titre, t.numserie num
+            from installation i, contenu c, terminal t
+            WHERE t.client='$login' and t.numserie=i.numserieterminal
+            and i.idcontenu=c.id;";
+            $query = pg_query($conn, $sql);
+    while($res = pg_fetch_array($query))
+    {
+        echo "<tr>";
+        echo "<td>$res[titre]</td>";
+        echo "<td>$res[num]</td>";
+        echo "</tr>";
     }
 }
 

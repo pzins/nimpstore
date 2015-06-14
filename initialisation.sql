@@ -59,28 +59,38 @@ INSERT INTO Editeur VALUES ('EA', 'M. George', 'www.ea.com');
 INSERT INTO Editeur VALUES ('Ubisoft', 'M. Paul', 'www.ubisoft.com');
 INSERT INTO Editeur VALUES ('Gameloft', 'Mme Baye', 'www.gameloft.com');
 INSERT INTO Editeur VALUES ('Konami', 'M. Chris', 'www.konami.com');
-/*
-
-
-INSERT INTO Contenu VALUES (0, 'Ball game', 'jeux avec de balles', 0, 'Gameloft');
-INSERT INTO Contenu VALUES (1, 'FIFA', 'jeux de foot', 3.0, 'EA');
-INSERT INTO Contenu VALUES (2, 'PES', 'jeux de foot', 2.8, 'Konami');
-INSERT INTO Contenu VALUES (3, 'Speed Car', 'jeux de course', 0, 'Gameloft');
-INSERT INTO Contenu VALUES (4, 'Hit shot', 'jeux de tir', 5, 'EA');
-INSERT INTO Contenu VALUES (5, 'assassin', 'jeux de combat', 4.6, 'Ubisoft');
-INSERT INTO Contenu VALUES (6, 'FIFA pack equipe', 'pack nouvelles equipes', 0.7, 'EA');
-INSERT INTO Contenu VALUES (7, 'FIFA pack maillot', 'pack nouveaux maillots', 0.3, 'EA');
-INSERT INTO Contenu VALUES (8, 'assassin cartes', 'nouvelles cartes', 1.1, 'Ubisoft');
-INSERT INTO Contenu VALUES (9, 'assassin armes', 'nouvelles armes', 0.9, 'EA');
 
 
 
-INSERT INTO Application VALUES (0, 4);
-INSERT INTO Application VALUES (1, 0);
+DELETE  from dureeacces;
+delete from transaction;
+delete from installation;
+DELETE  from application;
+DELETE from ressource;
+DELETE from contenu;
+
+select nextval('seq_contenu');
+SELECT setval('seq_contenu', 0);
+
+INSERT INTO Contenu VALUES (nextval('seq_contenu'),'Ball game', 'jeux avec de balles', 0, 'Gameloft');
+INSERT INTO Contenu VALUES (nextval('seq_contenu'), 'FIFA', 'jeux de foot', 3.0, 'EA');
+INSERT INTO Contenu VALUES (nextval('seq_contenu'), 'PES', 'jeux de foot', 2.8, 'Konami');
+INSERT INTO Contenu VALUES (nextval('seq_contenu'), 'Speed Car', 'jeux de course', 0, 'Gameloft');
+INSERT INTO Contenu VALUES (nextval('seq_contenu'), 'Hit shot', 'jeux de tir', 5, 'EA');
+INSERT INTO Contenu VALUES (nextval('seq_contenu'), 'assassin', 'jeux de combat', 0, 'Ubisoft');
+INSERT INTO Contenu VALUES (nextval('seq_contenu'), 'FIFA pack equipe', 'pack nouvelles equipes', 0.7, 'EA');
+INSERT INTO Contenu VALUES (nextval('seq_contenu'), 'FIFA pack maillot', 'pack nouveaux maillots', 0.3, 'EA');
+INSERT INTO Contenu VALUES (nextval('seq_contenu'), 'assassin cartes', 'nouvelles cartes', 1.1, 'Ubisoft');
+INSERT INTO Contenu VALUES (nextval('seq_contenu'), 'assassin armes', 'nouvelles armes', 0.9, 'EA');
+
+
+
+INSERT INTO Application VALUES (1, 4);
 INSERT INTO Application VALUES (2, 0);
-INSERT INTO Application VALUES (3, 8);
-INSERT INTO Application VALUES (4, 0);
+INSERT INTO Application VALUES (3, 0);
+INSERT INTO Application VALUES (4, 8);
 INSERT INTO Application VALUES (5, 0);
+INSERT INTO Application VALUES (6, 5);
 
 
 INSERT INTO Ressource VALUES (6, 1);
@@ -88,7 +98,44 @@ INSERT INTO Ressource VALUES (7, 1);
 INSERT INTO Ressource VALUES (8, 5);
 INSERT INTO Ressource VALUES (9, 5);
 
+//1-5 os
+//1-9 : contenu
 
+
+INSERT INTO contenudisponiblesur VALUES (0,1);
+INSERT INTO contenudisponiblesur VALUES (0,2);
+INSERT INTO contenudisponiblesur VALUES (0,3);
+INSERT INTO contenudisponiblesur VALUES (0,4);
+INSERT INTO contenudisponiblesur VALUES (0,5);
+INSERT INTO contenudisponiblesur VALUES (1,1);
+INSERT INTO contenudisponiblesur VALUES (1,2);
+INSERT INTO contenudisponiblesur VALUES (1,3);
+INSERT INTO contenudisponiblesur VALUES (2,4);
+INSERT INTO contenudisponiblesur VALUES (2,5);
+INSERT INTO contenudisponiblesur VALUES (2,1);
+INSERT INTO contenudisponiblesur VALUES (2,2);
+INSERT INTO contenudisponiblesur VALUES (2,3);
+INSERT INTO contenudisponiblesur VALUES (3,1);
+INSERT INTO contenudisponiblesur VALUES (3,2);
+INSERT INTO contenudisponiblesur VALUES (4,1);
+INSERT INTO contenudisponiblesur VALUES (5,1);
+INSERT INTO contenudisponiblesur VALUES (6,2);
+INSERT INTO contenudisponiblesur VALUES (6,3);
+INSERT INTO contenudisponiblesur VALUES (6,4);
+INSERT INTO contenudisponiblesur VALUES (6,5);
+INSERT INTO contenudisponiblesur VALUES (7,1);
+INSERT INTO contenudisponiblesur VALUES (7,2);
+INSERT INTO contenudisponiblesur VALUES (7,4);
+INSERT INTO contenudisponiblesur VALUES (7,5);
+INSERT INTO contenudisponiblesur VALUES (8,1);
+INSERT INTO contenudisponiblesur VALUES (8,2);
+INSERT INTO contenudisponiblesur VALUES (8,3);
+INSERT INTO contenudisponiblesur VALUES (9,4);
+INSERT INTO contenudisponiblesur VALUES (9,1);
+INSERT INTO contenudisponiblesur VALUES (9,2);
+
+
+/*
 INSERT INTO ContenuDispoOS VALUES (0, 'Microsoft', 7);
 INSERT INTO ContenuDispoOS VALUES (0, 'Microsoft', 8);
 INSERT INTO ContenuDispoOS VALUES (1, 'Microsoft', 8);
@@ -114,7 +161,7 @@ INSERT INTO ContenuDispoOS VALUES (9, 'Apple', 10);
 
 
 
-
+/*
 INSERT INTO Installation VALUES ('00001', 0, '2015-05-10');
 INSERT INTO Installation VALUES ('00002', 5, '2015-04-10');
 INSERT INTO Installation VALUES ('00003', 1, '2015-03-10');

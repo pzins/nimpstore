@@ -57,6 +57,7 @@ else if(isset($_POST["terminal"]))
     $login = $_SESSION['login'];
     achatContenu($conn, $_POST["typeAchat"],$login,
         $_POST["achatClient"], $_POST["achatApp"], $_POST["achatRes"]);
+    installer($conn, $_POST["typeAchat"], $login, $_POST["achatApp"], $_POST["achatRes"]);
     include_once(dirname(__FILE__) . '/../vue/v_terminaux_utilisateur.php');
 }
 

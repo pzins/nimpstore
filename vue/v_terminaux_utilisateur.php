@@ -31,6 +31,9 @@
         <td width="100pt"><b>Montant</b></td>
         <td width="100pt"><b>Destinataire</b></td>
         <td width="100pt"><b>Numéro Carte</b></td>
+        <td width="100pt"><b>Titre</b></td>
+        <td width="100pt"><b>Description</b></td>
+        <td width="100pt"><b>Editeur</b></td>
     </tr>
     <?php
         $login = $_SESSION['login'];

@@ -190,6 +190,7 @@ function achatContenu($conn, $type, $login, $client, $idApp, $idRes)
         $sql = "select coutperiodique p from application where idapp=$idApp;";
         $prixperio = pg_fetch_array(pg_query($conn, $sql))[p];
         $prix = $prixperio + $prixfixe;
+
         $sql = "insert into transaction values ($id[id], now(), $prix, '$login',
                       '$client', $carte[n]);";
         pg_query($conn, $sql);
@@ -204,9 +205,6 @@ function achatContenu($conn, $type, $login, $client, $idApp, $idRes)
 
         $sql = "insert into dureeacces values ($idApp, $id[id], $duree, false )";
         pg_query($conn, $sql);
-
-
-
     } else if($type == 'r')
     {
         $sql = "select coutfixe p from contenu where id=$idRes;";
@@ -217,13 +215,38 @@ function achatContenu($conn, $type, $login, $client, $idApp, $idRes)
         pg_query($conn, $sql);
         $sql = "insert into dureeacces values ($idApp, $id[id], -1, false )";
         pg_query($conn, $sql);
+
     }
 }
 
+function installer($conn, $type, $login, $idapp, $idres)
+{
+    if($type == 'a')
+    {
+        $id = $idapp;
+    }else
+    {
+        $id = $idres;
+    }
+    $sql = "select t.numserie num
+            from terminal t
+            WHERE t.client='$login'";
+    $query = pg_query($conn, $sql);
+    while($res = pg_fetch_array($query))
+    {
+        $sql = "insert into installation VALUES ($id, $res[num], current_date);";
+        pg_query($conn, $sql);
+    }
+}
+
+
 function getAchat($conn, $login)
 {
-    $sql = "select t.dateachat d, t.montanttotal m, t.destinateur d, numcarte n
-            from transaction t WHERE t.acheteur='$login';";
+    $sql = "select t.dateachat d, t.montanttotal m, t.destinateur d, numcarte n,
+            c.titre t, c.description descr, c.editeur e
+            from transaction t, dureeacces d, contenu c
+            WHERE t.acheteur='$login' and d.numtransaction=t.num
+            and c.id=d.idcontenu;";
     $query = pg_query($conn, $sql);
     while($res = pg_fetch_array($query))
     {
@@ -232,6 +255,9 @@ function getAchat($conn, $login)
         echo "<td>$res[m]</td>";
         echo "<td>$res[d]</td>";
         echo "<td>$res[n]</td>";
+        echo "<td>$res[t]</td>";
+        echo "<td>$res[descr]</td>";
+        echo "<td>$res[e]</td>";
         echo "</tr>";
     }
 }

@@ -5,6 +5,6 @@
     <?php
         getModele($conn);//crée le select pour le modele
     ?>
-    <input type="submit"/>
+    <input class="btn" type="submit"/>
 </form>
 </div>

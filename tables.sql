@@ -1,15 +1,5 @@
-
-
-
-
-
-
-
-
-
 -- --------------------------------------------------------
---
--- Structure de la table carte
+-- Création des sequences pour les ids
 --
 CREATE SEQUENCE seq_contenu;
 CREATE SEQUENCE seq_modele;
@@ -27,19 +17,15 @@ CREATE TABLE Carte (
   client VARCHAR(20) REFERENCES Client(login)
 );
 
---- pour carte bancaire pourquoi juste num?
---- montant courant et depart aussi ?
 
 CREATE VIEW vCarteBancaire AS SELECT num, client FROM carte WHERE dateValidite = NULL;
 
 CREATE VIEW vCartePrepayee AS SELECT * FROM carte WHERE dateValidite != NULL;
 
--- --------------------------------------------------------
 
---
+-- --------------------------------------------------------
 -- Structure de la table client
 --
-
 CREATE TABLE Client (
   login VARCHAR (20) PRIMARY KEY,
   mdp VARCHAR(20) CHECK(LENGTH(mdp) > 5),
@@ -49,42 +35,42 @@ CREATE TABLE Client (
   CHECK (email LIKE '%@%')
 );
 
+-- --------------------------------------------------------
+-- Structure de la table comptesadministrateurs
+--
 CREATE TABLE comptesAdministrateurs (
   login VARCHAR (20) UNIQUE ,
   mdp VARCHAR (20) CHECK (LENGTH (mdp) > 5)
 );
 
+-- --------------------------------------------------------
+-- Structure de la table comptesanalystes
+--
 CREATE TABLE comptesAnalystes (
   login VARCHAR (20) UNIQUE ,
   mdp VARCHAR (20) CHECK (LENGTH (mdp) > 5)
 );
 
 
+
 -- --------------------------------------------------------
-
---
 -- Structure de la table constructeur_dev
---
-
+-- (fabriquant de terminaux)
 CREATE TABLE Constructeur_dev (
   nom VARCHAR(50)PRIMARY KEY
 );
 
+
 -- --------------------------------------------------------
-
---
 -- Structure de la table constructeur_os
---
-
+-- (fabriquant systeme exploitation)
 CREATE TABLE Constructeur_os (
   nom VARCHAR(50) PRIMARY KEY
 );
 
 -- --------------------------------------------------------
---
--- Structure de la table editeur
---
-
+--  Structure de la table editeur
+-- (editeurs de contenu)
 CREATE TABLE Editeur (
   nom VARCHAR(50) PRIMARY KEY,
   contact VARCHAR(50) NOT NULL,
@@ -92,10 +78,10 @@ CREATE TABLE Editeur (
   CHECK (url LIKE 'www.%.%')
 );
 
--- --------------------------------------------------------
---
--- Structure de la table contenu
 
+-- --------------------------------------------------------
+-- Structure de la table contenu
+---
 CREATE TABLE Contenu (
   id SERIAL PRIMARY KEY,
   titre VARCHAR(100) NOT NULL,
@@ -104,16 +90,21 @@ CREATE TABLE Contenu (
   editeur VARCHAR(50) REFERENCES Editeur(nom) NOT NULL
 );
 
+-- --------------------------------------------------------
+-- Structure de la table application
+--
 CREATE TABLE Application (
   idApp SERIAL PRIMARY KEY REFERENCES Contenu(id),
   coutPeriodique DECIMAL(5,2) NOT NULL
 );
 
+-- --------------------------------------------------------
+-- Structure de la table ressource
+--
 CREATE TABLE Ressource (
   idRessource SERIAL PRIMARY KEY REFERENCES Contenu(id),
   idApp INTEGER REFERENCES Application(idApp)
 );
----contrainte : PROJ(Application, id) IN UNION(PROJ(Application, idApp), PROJ(Ressource, idRessource))
 
 CREATE VIEW vApplication AS
   SELECT C.id, C.titre, C.description, C.coutFixe, C.editeur, A.coutPeriodique
@@ -124,11 +115,12 @@ CREATE VIEW vRessource AS
   SELECT C.id, C.titre, C.description, C.coutFixe, C.editeur, R.idApp
   FROM Contenu C, Ressource R
   WHERE C.id=R.idRessource;
+
+
+
 -- --------------------------------------------------------;
---
 -- Structure de la table transaction
 --
-
 CREATE TABLE Transaction (
   num SERIAL PRIMARY KEY,
   dateAchat DATE NOT NULL,
@@ -138,12 +130,10 @@ CREATE TABLE Transaction (
   numCarte INT NOT NULL REFERENCES Carte(num)
 );
 
---- type DECIMAL(5,2) dejà >=0 je pense
---- --------------------------------------------------------
---
--- Structure de la table contenuconcerne
---
 
+--- --------------------------------------------------------
+-- Structure de la table dureeacces
+-- (acces ç une ressources après l'achat
 CREATE TABLE DureeAcces (
   idcontenu INT NOT NULL REFERENCES Contenu(id),
   numTransaction INT NOT NULL REFERENCES transaction(num),
@@ -153,36 +143,30 @@ CREATE TABLE DureeAcces (
 ) ;
 
 
--- --------------------------------------------------------
 
---
+-- --------------------------------------------------------
 -- Structure de la table Os
 --
-
 CREATE TABLE Os (
   id SERIAL PRIMARY KEY ,
   version VARCHAR(50) NOT NULL,
   constructeur VARCHAR(50) NOT NULL REFERENCES Constructeur_os(nom)
 ) ;
--- --------------------------------------------------------
 
---
+
+-- --------------------------------------------------------
 -- Structure de la table contenudisponiblesur
 --
-
 CREATE TABLE ContenuDisponibleSur (
   idContenu INT NOT NULL REFERENCES Contenu(id),
   idOs INT NOT NULL REFERENCES Os(id),
   PRIMARY KEY (idContenu,idOs)
 ) ;
 
+
 -- --------------------------------------------------------
-
-
---
 -- Structure de la table modele
 --
-
 CREATE TABLE Modele (
   id SERIAL PRIMARY KEY,
   designation VARCHAR(50) NOT NULL UNIQUE ,
@@ -191,23 +175,18 @@ CREATE TABLE Modele (
 );
 
 -- --------------------------------------------------------
---
 -- Structure de la table terminal
 --
-
 CREATE TABLE Terminal (
   numSerie INT PRIMARY KEY,
   client VARCHAR(20) NOT NULL REFERENCES Client(login),
   idModele INT NOT NULL REFERENCES Modele(id)
 );
 
---- num de serie plutot varchar que int je pense
 
 -- --------------------------------------------------------
+-- Structure de la table installation
 --
--- Structure de la table contenuinstallesur
---
-
 CREATE TABLE Installation (
   idContenu INT NOT NULL REFERENCES Contenu(id),
   numSerieTerminal INT NOT NULL REFERENCES Terminal(numSerie),
@@ -216,8 +195,8 @@ CREATE TABLE Installation (
 );
 
 -- --------------------------------------------------------
-
-
+-- Structure de la table avis
+--
 CREATE TABLE Avis (
   client VARCHAR(20) REFERENCES Client(login),
   idApplication INTEGER REFERENCES Application(idApp),

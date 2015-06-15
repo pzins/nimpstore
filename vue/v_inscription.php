@@ -6,7 +6,7 @@
     <tr><td>Mail: </td><td><input type="text" name="mail"/></td></tr>
     <tr><td>Login: </td><td><input type="text" name="login"/></td></tr>
     <tr><td>Mot de passe(6 carac. min): </td><td><input type="password" name="mdp"/></td></tr>
-    <tr><td><input type="submit"/></td></tr>
+    <tr><td><input class="btn" type="submit"/></td></tr>
 </form>
 </table>
 

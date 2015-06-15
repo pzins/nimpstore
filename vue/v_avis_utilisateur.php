@@ -19,9 +19,8 @@
             <option value="5">5</option>
         </select></td></tr>
         <tr><td>Commentaire</td><td>
-        <textarea name="com" rows="10" cols="50">
-        </textarea></td></tr>
-        <tr><td><input type="submit"/></td></tr>
+        <textarea name="com" rows="10" cols="50"></textarea></td></tr>
+        <tr><td><input class="btn" type="submit"/></td></tr>
 </table>
 
 </form>

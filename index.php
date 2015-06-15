@@ -8,8 +8,7 @@ require('header.php');
 <div id="main">
     <div id="content" align="center">
         <?php
-        ini_set('display_errors', 1);
-        error_reporting(E_ALL);
+
         //à mettre la connection ici comme ça on pourra l'enlever partout après
         include "modele/connect.php";
         $conn = connexion();

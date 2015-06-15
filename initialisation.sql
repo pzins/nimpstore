@@ -18,31 +18,37 @@ DELETE from os;
 DELETE FROM constructeur_os;
 
 
+
 drop SEQUENCE seq_modele;
 drop SEQUENCE seq_transaction;
 drop SEQUENCE seq_contenu;
 drop SEQUENCE seq_os;
+drop SEQUENCE seq_carte;
 
 CREATE SEQUENCE seq_contenu;
 CREATE SEQUENCE seq_modele;
 CREATE SEQUENCE seq_os;
 CREATE SEQUENCE seq_transaction;
+CREATE SEQUENCE seq_carte;
+
 
 ALTER SEQUENCE seq_contenu MINVALUE 0;
 ALTER SEQUENCE seq_transaction MINVALUE 0;
 ALTER SEQUENCE seq_os MINVALUE 0;
 ALTER SEQUENCE seq_modele MINVALUE 0;
+ALTER SEQUENCE seq_carte MINVALUE 0;
 
 SELECT setval('seq_modele', 0);
 SELECT setval('seq_transaction', 0);
 SELECT setval('seq_contenu', 0);
 SELECT setval('seq_os', 0);
+SELECT setval('seq_carte', 0);
 
 
 INSERT INTO Client VALUES ('aaa', 'aaaaaa', 'albert.martin@gmail.com', 'Martin', 'Albert');
-INSERT INTO Client VALUES ('bbb', 'bbbbbb', 'alexandre.lacaz@gmail.com', 'Lacaz', 'Alexandre');
+INSERT INTO Client VALUES ('bbb', 'bbbbbb', 'alexandre.dupond@gmail.com', 'Dupond', 'Alexandre');
 INSERT INTO Client VALUES ('ccc','cccccc', 'luc.zen@gmail.com', 'Zen', 'Luc');
-INSERT INTO Client VALUES ('ddd', 'dddddd', 'marc.rede@gmail.com', 'Rede', 'Marc');
+INSERT INTO Client VALUES ('ddd', 'dddddd', 'marc.roux@gmail.com', 'Roux', 'Marc');
 
 
 
@@ -161,15 +167,15 @@ INSERT INTO contenudisponiblesur VALUES (10,3);
 INSERT INTO contenudisponiblesur VALUES (10,4);
 INSERT INTO contenudisponiblesur VALUES (10,5);
 
-insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE , 0, 'aaa', 'aaa',1);
-insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE , 25, 'bbb', 'bbb',2);
-insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE , 20, 'ccc', 'ddd',3);
-insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE , 20, 'ccc', 'ccc',3);
-insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE , 25, 'ccc', 'aaa',3);
-insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE , 5, 'aaa', 'aaa',1);
-insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE , 25, 'aaa', 'ddd',1);
-insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE , 2, 'aaa', 'ddd',1);
-insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE , 3, 'aaa', 'ddd',1);
+insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE-1 , 0, 'aaa', 'aaa',1);
+insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE-1 , 25, 'bbb', 'bbb',2);
+insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE-1 , 20, 'ccc', 'ddd',3);
+insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE-1 , 20, 'ccc', 'ccc',3);
+insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE-1 , 25, 'ccc', 'aaa',3);
+insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE-1 , 5, 'aaa', 'aaa',1);
+insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE-1 , 25, 'aaa', 'ddd',1);
+insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE-1 , 2, 'aaa', 'ddd',1);
+insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE-1 , 3, 'aaa', 'ddd',1);
 
 
 

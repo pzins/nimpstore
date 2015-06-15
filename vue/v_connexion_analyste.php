@@ -5,7 +5,7 @@
     <table>
         <tr><td>Login : </td><td><input type="text" name="login"/></td></tr>
         <tr><td>Password : </td><td><input type="password" name="password"/></td></tr>
-        <tr><td><input type="submit"/></td></tr>
+        <tr><td><input class="btn" type="submit"/></td></tr>
     </table>
 </form>
 <script type="text/javascript">

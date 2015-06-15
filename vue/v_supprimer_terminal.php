@@ -4,5 +4,5 @@
     $login = $_SESSION['login'];
     getNumserie($conn, $login);
     ?>
-    <input type="submit"/>
+    <input class="btn" type="submit"/>
 </form>

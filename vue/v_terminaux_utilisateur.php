@@ -27,7 +27,7 @@
 <br/><br/><br/>
 
 <h1>Historique Achat</h1>
-<table border="1">
+<table border="1">git 
     <tr>
         <td width="100pt"><b>Date achat</b></td>
         <td width="100pt"><b>Montant</b></td>

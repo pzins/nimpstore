@@ -1,7 +1,7 @@
 <h1>Applications Disponibles</h1>
 <table border="1">
     <tr>
-        <td width="100pt"><b>Num Serie</b></td>
+        <td width="100pt"><b>Terminal</b></td>
         <td width="100pt"><b>Titre</b></td>
         <td width="100pt"><b>Description</b></td>
         <td width="100pt"><b>Editeur</b></td>
@@ -24,6 +24,6 @@
             echo "<input type='hidden' name='login' value='$login'/>";
             echo "<input type='hidden' name='password' value='$pwd'/>";
         ?>
-        <input type="submit" value="Retour"/>
+        <input type="submit" class="btn" value="Retour"/>
     </p>
 </form>

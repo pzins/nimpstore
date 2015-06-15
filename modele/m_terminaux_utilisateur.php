@@ -65,9 +65,9 @@ function getIdClient($conn, $login)
  */
 function ajouter_terminal($conn, $numserie, $modele, $login)
 {
-    $sql = "select count(*) from terminal t WHERE t.client=$login";
-    $nb = pg_query($conn, $sql);
-    if(nb > 5)
+    $sql = "select count(*) co from terminal t WHERE t.client='$login'";
+    $nb = pg_fetch_array(pg_query($conn, $sql))[co];
+    if($nb >= '5')
     {
         echo "<h5 class='error'>Impossible d'avoir plus de 5 terminaux</h5>";
     }
@@ -280,23 +280,24 @@ function installer($conn, $type, $login, $idapp, $idres)
     }
 }
 
-//affiche les lignes correspondant aux achat du client
+//affiche les lignes correspondant aux achats du client
 function getAchat($conn, $login)
 {
-    $sql = "select t.dateachat d, t.montanttotal m, t.destinateur d, numcarte n,
-            c.titre t, c.description descr, c.editeur e
+    $sql = "select t.dateachat date, t.montanttotal m, t.destinateur d, numcarte n,
+            c.titre ti, c.description descr, c.editeur e
             from transaction t, dureeacces d, contenu c
             WHERE t.acheteur='$login' and d.numtransaction=t.num
-            and c.id=d.idcontenu;";
+            and c.id=d.idcontenu
+            ORDER BY date DESC ;";
     $query = pg_query($conn, $sql);
     while($res = pg_fetch_array($query))
     {
         echo "<tr>";
-        echo "<td>$res[d]</td>";
+        echo "<td>$res[date]</td>";
         echo "<td>$res[m]</td>";
         echo "<td>$res[d]</td>";
         echo "<td>$res[n]</td>";
-        echo "<td>$res[t]</td>";
+        echo "<td>$res[ti]</td>";
         echo "<td>$res[descr]</td>";
         echo "<td>$res[e]</td>";
         echo "</tr>";
@@ -320,14 +321,16 @@ function getHistoInstallation($conn, $login)
     }
 }
 
-//affiche les options du select contenant les appli du client
-////pour l'ajout d'un avis
+//affiche les options du select contenant les applis du client
+//pour l'ajout d'un avis - celle pour lesquelles il a déjà donné son avis
 function getApplicationClientForm($conn, $login)
 {
     $sql = "select a.titre t, a.description d, a.id i
             from vapplication a, dureeacces d, TRANSACTION t
             WHERE a.id=d.idcontenu and d.numtransaction=t.num
-              and t.destinateur='$login';";
+              and t.destinateur='$login'
+              and a.id not IN
+              (select a.idapplication from avis a WHERE a.client='$login');";
     $query = pg_query($conn, $sql);
     while($res = pg_fetch_array($query))
     {
@@ -339,7 +342,6 @@ function getApplicationClientForm($conn, $login)
 function addAvis($conn, $login, $idapp, $note, $com)
 {
     $sql = "insert into avis VALUES ('$login',$idapp, $note, '$com');";
-    pg_query($conn, $sql);
     pg_query($conn, $sql);
 }
 

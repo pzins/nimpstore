@@ -4,7 +4,7 @@
         <tr><td>Nom:      </td><td><input type="text" name="nom"/>    </td></tr>
         <tr><td>Contact:  </td><td><input type="text" name="contact"/></td></tr>
         <tr><td>URL:      </td><td><input type="text" name="url"/>    </td></tr>
-        <tr><td><input onclick="test()" type="submit"/></td></tr>
+        <tr><td><input onclick="test()" class="btn" type="submit"/></td></tr>
     </table>
 
 </form>

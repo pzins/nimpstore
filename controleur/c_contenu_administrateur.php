@@ -41,13 +41,13 @@ else
         session_start();
         $_SESSION['login'] = $_POST['login'];
         $_SESSION['pwd'] = $_POST['password'];
-
         include_once(dirname(__FILE__).'/../vue/v_contenu_administrateur.php');
-
     }
     else {
         echo "<h2>L'identification a echouee</h2>";
     }
 }
+include_once(dirname(__FILE__).'/../vue/v_contenu_administrateur.php');
+
 ?>
 

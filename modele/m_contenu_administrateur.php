@@ -120,3 +120,22 @@ function ajouterEditeur($conn, $nom, $contact, $url)
     $query = pg_query($conn, $sql);
     return $query;
 }
+
+//ajouter carte à un client
+function ajouterCarte($conn, $montant, $validite, $client)
+{
+    $sql = "insert into carte VALUES (nextval('seq_carte'), $montant,
+            $montant, '$validite', '$client');";
+    pg_query($conn, $sql);
+}
+
+//affiche les option du select pour les clients destinataires de l'achat
+function getClientForm($conn)
+{
+    $sql = "select login l, nom n, prenom p from client";
+    $query = pg_query($conn, $sql);
+    while($res = pg_fetch_array($query))
+    {
+        echo "<option value='$res[l]'> $res[l] : $res[n], $res[p]</option>";
+    }
+}

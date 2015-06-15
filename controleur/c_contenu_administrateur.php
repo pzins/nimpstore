@@ -27,6 +27,11 @@ if(isset($_POST["type"]))
         echo "<h2>Erreur dans l'ajout : nom deja existant ou URL non valide</h2>";
         include_once(dirname(__FILE__).'/../vue/v_contenu_administrateur.php');
     }
+} else if (isset($_POST["validite"]))
+{
+    ajouterCarte($conn, $_POST["montant"], $_POST["validite"], $_POST["client"]);
+    include_once(dirname(__FILE__).'/../vue/v_contenu_administrateur.php');
+
 }
 else
 {

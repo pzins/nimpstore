@@ -1,19 +1,15 @@
-create trigger tInstallation
-before INSERT ON
+CREATE LANGUAGE plpgsql;
 
---Ajoute automatiquement une commande dans la base
-CREATE FUNCTION trig_commande() RETURNS trigger AS $trig_commande$
-    DECLARE
-		idPanier INTEGER;
+
+CREATE or REPLACE FUNCTION trig_new_client() RETURNS trigger AS $trig_new_client$
     BEGIN
-		SELECT currval('seq_tpanier') INTO idPanier
-		FROM tPanier;
-
-		INSERT INTO tcommande VALUES(idPanier, NOW(), 'en preparation', NULL, NULL, NULL);
-
-        RETURN NEW;
+		INSERT INTO carte VALUES(nextval('seq_carte'), NULL, NULL, NULL, NEW.login);
+    return NULL;
     END;
-$trig_commande$ LANGUAGE plpgsql;
+$trig_new_client$ LANGUAGE plpgsql;
 
-CREATE TRIGGER trig_commande AFTER INSERT ON tPanier
-    FOR EACH ROW EXECUTE PROCEDURE trig_commande();
+
+drop TRIGGER trig_new_client on client;
+
+CREATE TRIGGER trig_new_client AFTER INSERT ON client
+FOR EACH ROW EXECUTE PROCEDURE trig_new_client();

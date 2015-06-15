@@ -44,12 +44,14 @@ INSERT INTO Client VALUES ('bbb', 'bbbbbb', 'alexandre.lacaz@gmail.com', 'Lacaz'
 INSERT INTO Client VALUES ('ccc','cccccc', 'luc.zen@gmail.com', 'Zen', 'Luc');
 INSERT INTO Client VALUES ('ddd', 'dddddd', 'marc.rede@gmail.com', 'Rede', 'Marc');
 
+
+/*
 INSERT INTO  carte VALUES (0, NULL, NULL, NULL, 'aaa');
 INSERT INTO  carte VALUES (1, NULL, NULL, NULL, 'bbb');
 INSERT INTO  carte VALUES (2, NULL, NULL, NULL, 'ccc');
 INSERT INTO  carte VALUES (3, NULL, NULL, NULL, 'ddd');
 
-
+*/
 
 INSERT INTO comptesadministrateurs VALUES ('admin','123456');
 INSERT INTO comptesanalystes VALUES ('stat','789789');

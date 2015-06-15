@@ -302,7 +302,7 @@ function addAvis($conn, $login, $idapp, $note, $com)
 {
     $sql = "insert into avis VALUES ('$login',$idapp, $note, '$com');";
     pg_query($conn, $sql);
-
+    pg_query($conn, $sql);
 }
 
 

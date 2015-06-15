@@ -15,10 +15,12 @@ CREATE SEQUENCE seq_contenu;
 CREATE SEQUENCE seq_modele;
 CREATE SEQUENCE seq_os;
 create SEQUENCE seq_transaction;
+create SEQUENCE seq_carte;
+
 
 
 CREATE TABLE Carte (
-  num INT PRIMARY KEY,
+  num int PRIMARY KEY,
   montantDepart DECIMAL(5,2) DEFAULT NULL,
   montantCourant DECIMAL(5,2) DEFAULT NULL,
   dateValidite date DEFAULT NULL,
@@ -28,7 +30,7 @@ CREATE TABLE Carte (
 --- pour carte bancaire pourquoi juste num?
 --- montant courant et depart aussi ?
 
-CREATE VIEW vCarteBancaire AS SELECT num FROM carte WHERE dateValidite = NULL;
+CREATE VIEW vCarteBancaire AS SELECT num, client FROM carte WHERE dateValidite = NULL;
 
 CREATE VIEW vCartePrepayee AS SELECT * FROM carte WHERE dateValidite != NULL;
 

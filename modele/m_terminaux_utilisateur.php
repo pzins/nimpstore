@@ -157,13 +157,32 @@ function getAppliDispoForm($login, $conn)
 //pour l'achat de ressources
 function getRessourceForm($conn)
 {
-    $sql = "select id id, titre t from vressource;";
+    $sql = "select id id, titre t, coutfixe c, description d
+        from vressource;";
     $query = pg_query($conn, $sql);
     while($res = pg_fetch_array($query))
     {
-        echo "<option value='$res[id]'> $res[t] </option>";
+        echo "<option value='$res[id]'> $res[t] :$res[d] : cout fixe :
+        $res[c]</option>";
     }
 }
+
+//affiches les options pour le select des cartes d'un client
+//lors d'un achat
+function getCarteForm($conn, $login)
+{
+    $sql = "select c.num num, c.montantcourant m, c.datevalidite d
+            from carte c
+            WHERE '$login'=client;";
+    $query = pg_query($conn, $sql);
+    while($res = pg_fetch_array($query))
+    {
+        echo "<option value='$res[num]'> $res[num] : montant courant :
+            $res[m], date validite : $res[d]</option>";
+    }
+}
+
+
 
 //affiche les option du select pour les clients destinataires de l'achat
 function getClientForm($conn)
@@ -177,20 +196,32 @@ function getClientForm($conn)
 }
 
 //réalise les ajouts ds les tables lors d'un achat
-function achatContenu($conn, $type, $login, $client, $idApp, $idRes)
+function achatContenu($conn, $type, $login, $client, $idApp, $idRes, $carte)
 {
+    //il faut renvoyer le num de la carte pour avoir le num et ensuite trouver le montant
+
     $sql = "SELECT nextval('seq_transaction') id;";
     $id = pg_fetch_array(pg_query($conn, $sql));
 
-    $sql = "select num n from carte where client='$login'";
-    $carte = pg_fetch_array(pg_query($conn, $sql));
+    $sql = "select montantcourant m from carte where num='$carte'";
+    $montant_carte = pg_fetch_array(pg_query($conn, $sql))[m];
     if($type == 'a'){
+
         $sql = "select coutfixe p from contenu where id=$idApp;";
         $prixfixe = pg_fetch_array(pg_query($conn, $sql))[p];
 
         $sql = "select coutperiodique p from application where idapp=$idApp;";
         $prixperio = pg_fetch_array(pg_query($conn, $sql))[p];
         $prix = $prixperio + $prixfixe;
+
+        if($prix > $montant_carte && !empty($montant_carte))
+        {
+            echo "case 1 $montant_carte";
+
+            echo "<h3 class='error'> Vous n'avez pas assez d'argent sur cette
+                carte</h3>";
+            return false;
+        }
 
         $sql = "insert into transaction values ($id[id], now(), $prix, '$login',
                       '$client', $carte[n]);";
@@ -211,13 +242,20 @@ function achatContenu($conn, $type, $login, $client, $idApp, $idRes)
         $sql = "select coutfixe p from contenu where id=$idRes;";
         $prix = pg_fetch_array(pg_query($conn, $sql))[p];
 
+        if($prix > $montant_carte && !empty($montant_carte))
+        {
+            echo "case 2 ";
+            echo "<h3 class='error'> Vous n'avez pas assez d'argent sur cette
+                carte</h3>";
+            return false;
+        }
         $sql = "insert into transaction values ($id[id], now(), $prix, '$login',
                       '$client', $carte[n]);";
         pg_query($conn, $sql);
         $sql = "insert into dureeacces values ($idApp, $id[id], -1, false )";
         pg_query($conn, $sql);
-
     }
+    return true;
 }
 
 

@@ -55,9 +55,16 @@ else if(isset($_POST["terminal"]))
     include_once(dirname(__FILE__) . '/../modele/m_terminaux_utilisateur.php');
     session_start();
     $login = $_SESSION['login'];
-    achatContenu($conn, $_POST["typeAchat"],$login,
-        $_POST["achatClient"], $_POST["achatApp"], $_POST["achatRes"]);
-    installer($conn, $_POST["typeAchat"], $_POST["achatClient"], $_POST["achatApp"], $_POST["achatRes"]);
+    $res = achatContenu($conn, $_POST["typeAchat"],$login,
+        $_POST["achatClient"], $_POST["achatApp"], $_POST["achatRes"],
+        $_POST["carte"]);
+    if($res)
+    {
+        echo "<h4> Achat realise </h4>";
+        installer($conn, $_POST["typeAchat"], $_POST["achatClient"],
+            $_POST["achatApp"], $_POST["achatRes"]);
+    }
+
     include_once(dirname(__FILE__) . '/../vue/v_terminaux_utilisateur.php');
 }else if(isset($_POST["app"]))
 {

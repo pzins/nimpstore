@@ -25,8 +25,16 @@
         <?php
         getRessourceForm($conn);
         ?></select></td></tr>
+
+        <tr><td>Carte : </td><td><select name="carte" >
+                <?php
+                    getCarteForm($conn, $login);
+                ?></select>
+            </td></tr>
         <tr><td><input type="submit"/></td></tr>
     </table>
+
+
 
 </form>
 <script type="text/javascript">

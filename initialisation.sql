@@ -45,13 +45,6 @@ INSERT INTO Client VALUES ('ccc','cccccc', 'luc.zen@gmail.com', 'Zen', 'Luc');
 INSERT INTO Client VALUES ('ddd', 'dddddd', 'marc.rede@gmail.com', 'Rede', 'Marc');
 
 
-/*
-INSERT INTO  carte VALUES (0, NULL, NULL, NULL, 'aaa');
-INSERT INTO  carte VALUES (1, NULL, NULL, NULL, 'bbb');
-INSERT INTO  carte VALUES (2, NULL, NULL, NULL, 'ccc');
-INSERT INTO  carte VALUES (3, NULL, NULL, NULL, 'ddd');
-
-*/
 
 INSERT INTO comptesadministrateurs VALUES ('admin','123456');
 INSERT INTO comptesanalystes VALUES ('stat','789789');
@@ -135,9 +128,6 @@ INSERT INTO Ressource VALUES (9, 5);
 
 //1-5 os
 //1-9 : contenu
-
-
-
 INSERT INTO contenudisponiblesur VALUES (1,1);
 INSERT INTO contenudisponiblesur VALUES (1,2);
 INSERT INTO contenudisponiblesur VALUES (1,3);
@@ -148,6 +138,7 @@ INSERT INTO contenudisponiblesur VALUES (2,2);
 INSERT INTO contenudisponiblesur VALUES (2,3);
 INSERT INTO contenudisponiblesur VALUES (3,1);
 INSERT INTO contenudisponiblesur VALUES (3,2);
+INSERT INTO contenudisponiblesur VALUES (3,3);
 INSERT INTO contenudisponiblesur VALUES (4,1);
 INSERT INTO contenudisponiblesur VALUES (5,1);
 INSERT INTO contenudisponiblesur VALUES (6,2);
@@ -170,14 +161,27 @@ INSERT INTO contenudisponiblesur VALUES (10,3);
 INSERT INTO contenudisponiblesur VALUES (10,4);
 INSERT INTO contenudisponiblesur VALUES (10,5);
 
-insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE , 0, 'aaa', 'aaa',0);
-insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE , 25, 'bbb', 'bbb',0);
-insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE , 20, 'ccc', 'ddd',0);
+insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE , 0, 'aaa', 'aaa',1);
+insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE , 25, 'bbb', 'bbb',2);
+insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE , 20, 'ccc', 'ddd',3);
+insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE , 20, 'ccc', 'ccc',3);
+insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE , 25, 'ccc', 'aaa',3);
+insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE , 5, 'aaa', 'aaa',1);
+insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE , 25, 'aaa', 'ddd',1);
+insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE , 2, 'aaa', 'ddd',1);
+insert into TRANSACTION VALUES (nextval('seq_transaction'), CURRENT_DATE , 3, 'aaa', 'ddd',1);
+
 
 
 INSERT INTO dureeacces VALUES (1, 1, -1, false);
 INSERT INTO dureeacces VALUES (2, 2, -1, false);
 INSERT INTO dureeacces VALUES (3, 3, -1, false);
+INSERT INTO dureeacces VALUES (3, 4, -1, false);
+INSERT INTO dureeacces VALUES (2, 5, -1, false);
+INSERT INTO dureeacces VALUES (5, 6, -1, false);
+INSERT INTO dureeacces VALUES (2, 7, -1, false);
+INSERT INTO dureeacces VALUES (7, 8, -1, false);
+INSERT INTO dureeacces VALUES (8, 9, -1, false);
 
 
 
@@ -186,20 +190,26 @@ INSERT INTO Installation VALUES (2, 1002, CURRENT_DATE );
 INSERT INTO Installation VALUES (2, 1003, CURRENT_DATE );
 INSERT INTO Installation VALUES (3, 1005, CURRENT_DATE );
 INSERT INTO Installation VALUES (3, 1006, CURRENT_DATE );
+INSERT INTO Installation VALUES (3, 1004, CURRENT_DATE );
+INSERT INTO Installation VALUES (2, 1000, CURRENT_DATE );
+INSERT INTO Installation VALUES (2, 1001, CURRENT_DATE );
+INSERT INTO Installation VALUES (5, 1000, CURRENT_DATE );
+INSERT INTO Installation VALUES (2, 1005, CURRENT_DATE );
+INSERT INTO Installation VALUES (2, 1006, CURRENT_DATE );
+INSERT INTO Installation VALUES (7, 1006, CURRENT_DATE );
+INSERT INTO Installation VALUES (7, 1005, CURRENT_DATE );
+INSERT INTO Installation VALUES (8, 1005, CURRENT_DATE );
+INSERT INTO Installation VALUES (8, 1006, CURRENT_DATE );
 
 
 
 
 
-INSERT INTO Avis VALUES ('aaa', 1, 3, 'correct');
-INSERT INTO Avis VALUES ('bbb', 2, 5, 'genial');
+INSERT INTO Avis VALUES ('aaa', 1, 3, 'amusant');
+INSERT INTO Avis VALUES ('ddd', 2, 5, 'très réaliste');
+INSERT INTO Avis VALUES ('aaa', 5, 1, 'jeu trop dificile');
+INSERT INTO Avis VALUES ('bbb', 2, 5, 'fantastique');
+INSERT INTO Avis VALUES ('ccc', 3, 4, 'jeu très amusant');
+INSERT INTO Avis VALUES ('ddd', 3, 5, 'superbe jeu');
+INSERT INTO Avis VALUES ('aaa', 3, 2, 'un peu decevant');
 
-/*
-
-
-INSERT INTO Carte VALUES ('aex0bgf3',50, 35.6, '2017-01-01', 'CB');
-INSERT INTO Carte VALUES ('58sggqoe',50, 44.7, '2017-01-01', 'CB');
-INSERT INTO Carte VALUES ('dhodf5wf',15, 11, '2016-01-01', 'CP');
-
-
-*/

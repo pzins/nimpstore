@@ -9,7 +9,7 @@
                 </select>
             </td>
         </tr>
-        <tr id="a"><td>Client:      </td><td><select name="achatClient">
+        <tr ><td>Client:      </td><td><select name="achatClient">
         <?php
         session_start();
         $login = $_SESSION['login'];

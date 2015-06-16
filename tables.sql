@@ -8,6 +8,17 @@ create SEQUENCE seq_transaction;
 create SEQUENCE seq_carte;
 
 
+-- --------------------------------------------------------
+-- Structure de la table client
+--
+CREATE TABLE Client (
+  login VARCHAR (20) PRIMARY KEY,
+  mdp VARCHAR(20) CHECK(LENGTH(mdp) > 5),
+  email VARCHAR(50) NOT NULL UNIQUE,
+  nom VARCHAR(30) NOT NULL,
+  prenom VARCHAR(30) NOT NULL,
+  CHECK (email LIKE '%@%')
+);
 
 CREATE TABLE Carte (
   num int PRIMARY KEY,
@@ -23,17 +34,6 @@ CREATE VIEW vCarteBancaire AS SELECT num, client FROM carte WHERE dateValidite =
 CREATE VIEW vCartePrepayee AS SELECT * FROM carte WHERE dateValidite != NULL;
 
 
--- --------------------------------------------------------
--- Structure de la table client
---
-CREATE TABLE Client (
-  login VARCHAR (20) PRIMARY KEY,
-  mdp VARCHAR(20) CHECK(LENGTH(mdp) > 5),
-  email VARCHAR(50) NOT NULL UNIQUE,
-  nom VARCHAR(30) NOT NULL,
-  prenom VARCHAR(30) NOT NULL,
-  CHECK (email LIKE '%@%')
-);
 
 -- --------------------------------------------------------
 -- Structure de la table comptesadministrateurs
